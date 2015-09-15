@@ -1,0 +1,14 @@
+..\obj\app_longshortkey.o: ..\APP\App_LongShortKey.c
+..\obj\app_longshortkey.o: ..\APP\App_LongShortKey.h
+..\obj\app_longshortkey.o: ..\HARDWARE\KEY\key.h
+..\obj\app_longshortkey.o: ..\SYSTEM\sys\sys.h
+..\obj\app_longshortkey.o: ..\USER\stm32f10x.h
+..\obj\app_longshortkey.o: ..\CORE\core_cm3.h
+..\obj\app_longshortkey.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+..\obj\app_longshortkey.o: ..\USER\system_stm32f10x.h
+..\obj\app_longshortkey.o: ..\USER\stm32f10x_conf.h
+..\obj\app_longshortkey.o: ..\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\obj\app_longshortkey.o: ..\USER\stm32f10x.h
+..\obj\app_longshortkey.o: ..\STM32F10x_FWLib\inc\stm32f10x_rcc.h
+..\obj\app_longshortkey.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
+..\obj\app_longshortkey.o: ..\STM32F10x_FWLib\inc\misc.h

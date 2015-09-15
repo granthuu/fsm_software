@@ -1,0 +1,14 @@
+..\obj\app_keynonblock.o: ..\APP\App_KeyNonblock.c
+..\obj\app_keynonblock.o: ..\APP\App_KeyNonblock.h
+..\obj\app_keynonblock.o: ..\HARDWARE\KEY\key.h
+..\obj\app_keynonblock.o: ..\SYSTEM\sys\sys.h
+..\obj\app_keynonblock.o: ..\USER\stm32f10x.h
+..\obj\app_keynonblock.o: ..\CORE\core_cm3.h
+..\obj\app_keynonblock.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+..\obj\app_keynonblock.o: ..\USER\system_stm32f10x.h
+..\obj\app_keynonblock.o: ..\USER\stm32f10x_conf.h
+..\obj\app_keynonblock.o: ..\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\obj\app_keynonblock.o: ..\USER\stm32f10x.h
+..\obj\app_keynonblock.o: ..\STM32F10x_FWLib\inc\stm32f10x_rcc.h
+..\obj\app_keynonblock.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
+..\obj\app_keynonblock.o: ..\STM32F10x_FWLib\inc\misc.h
