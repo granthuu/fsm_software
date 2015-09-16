@@ -2,3 +2,10 @@ demo_1st
 demo_2nd
 demo_3rd
 demo_4th
+*.axf
+*.o
+*.crf
+*.d
+*.plg
+*.htm
+*.axf
