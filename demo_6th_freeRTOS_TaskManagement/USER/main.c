@@ -12,15 +12,21 @@
 #include "FreeRTOSConfig.h"
 
 
+
 void vTaskFunction(void *pvParameters)
 {
     char *taskName;
+    portTickType xLastWakeTime;
+    
     taskName = (char *)pvParameters;
+    xLastWakeTime = xTaskGetTickCount();  
     
     while(1)
     {
         printf(taskName);
-        vTaskDelay(1000/portTICK_RATE_MS); 
+        
+        //vTaskDelay(1000/portTICK_RATE_MS); 
+        vTaskDelayUntil( &xLastWakeTime, ( 1000 / portTICK_RATE_MS ) );
     }
 }
 
@@ -36,7 +42,7 @@ int main(void)
     
     //create two tasks, with the same priority.
     xTaskCreate( vTaskFunction, "task1", configMINIMAL_STACK_SIZE, (void *)task1, 1, NULL);      
-    xTaskCreate( vTaskFunction, "task2", configMINIMAL_STACK_SIZE, (void *)task2, 1, NULL );
+    xTaskCreate( vTaskFunction, "task2", configMINIMAL_STACK_SIZE, (void *)task2, 2, NULL);
     
     // start scheduler now
     vTaskStartScheduler();            
