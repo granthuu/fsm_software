@@ -11,39 +11,22 @@
 #include "portable.h"
 #include "FreeRTOSConfig.h"
 
-void task2(void *pvParameters)
+
+void vTaskFunction(void *pvParameters)
 {
-    u8 state1 = 0; 
+    char *taskName;
+    taskName = (char *)pvParameters;
     
     while(1)
     {
-        printf("task 2 is running \r\n");
-        
-        (state1 = !state1) == 1 ? GREEN_ON() : GREEN_OFF();
-        vTaskDelay(1000/portTICK_RATE_MS);         
+        printf(taskName);
+        vTaskDelay(1000/portTICK_RATE_MS); 
     }
 }
 
 
-void task1(void *pvParameters)
-{
-    u8 state = 0;
-    
-    xTaskCreate( task2, "task2", configMINIMAL_STACK_SIZE, NULL, 1, NULL );
-   
-    while(1)
-    {
-        printf("task 1 is running \r\n");
-        
-        (state = !state) == 1 ? RED_ON(): RED_OFF(); 
-        vTaskDelay(1000/portTICK_RATE_MS);        
-    }
-}
-
-
-
-
-
+static const char * task1 = "task 1 is running \r\n";
+static const char * task2 = "task 2 is running \r\n";
 
 int main(void)
 {
@@ -52,8 +35,8 @@ int main(void)
     uart_init(115200);
     
     //create two tasks, with the same priority.
-    //xTaskCreate( task2, "task1", configMINIMAL_STACK_SIZE, NULL, 1, NULL);      
-    xTaskCreate( task1, "task2", configMINIMAL_STACK_SIZE, NULL, 1, NULL );
+    xTaskCreate( vTaskFunction, "task1", configMINIMAL_STACK_SIZE, (void *)task1, 1, NULL);      
+    xTaskCreate( vTaskFunction, "task2", configMINIMAL_STACK_SIZE, (void *)task2, 1, NULL );
     
     // start scheduler now
     vTaskStartScheduler();            
