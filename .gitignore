@@ -2,6 +2,11 @@ demo_1st
 demo_2nd
 demo_3rd
 demo_4th
+demo_4th/OBJ
+demo_4th/OBJ/*.o
+demo_5th_NoFreeRTOS
+demo_5th_freeRTOS
+FreeRTOSv8.2.2
 *.axf
 *.o
 *.crf
