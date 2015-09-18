@@ -11,26 +11,36 @@
 #include "portable.h"
 #include "FreeRTOSConfig.h"
 
-extern unsigned long ulIdleCycleCount;
+void task2(void *pvParameters);
 
-
-void vTaskFunction(void *pvParameters)
-{
-    char *taskName;
-    taskName = (char *)pvParameters;
-
-    while(1)
-    {
-        printf(taskName);
-        printf("%d \r\n", ulIdleCycleCount);
-
-        vTaskDelay( 500 / portTICK_RATE_MS );
-    }
-}
-
+xTaskHandle xTask2Handle;
 
 static const char * Task1 = "task1 is running \r\n";
 static const char * Task2 = "task2 is running \r\n";
+
+void task1(void * pvParameters)
+{
+    char *TaskName = (char *)pvParameters;
+
+    while(1)
+    {
+        printf(TaskName);
+        
+        xTaskCreate( task2, "Task2", configMINIMAL_STACK_SIZE, (void *)Task2, 2, &xTask2Handle);      
+        vTaskDelay(1000/portTICK_RATE_MS);
+    } 
+}
+
+
+void task2(void *pvParameters)
+{
+    char *taskName = (char *)pvParameters;
+    printf(taskName);
+     
+    printf("task 2 is running and about to delete itself \r\n");
+    vTaskDelete(xTask2Handle);
+    // == vTaskDelete(NULL);
+}
 
 
 int main(void)
@@ -39,9 +49,8 @@ int main(void)
     LED_Init();		  	
     uart_init(115200);
     
-    //create two tasks, with the same priority.
-    xTaskCreate( vTaskFunction, "Task1", configMINIMAL_STACK_SIZE, (void *)Task1, 1, NULL);      
-    xTaskCreate( vTaskFunction, "Task2", configMINIMAL_STACK_SIZE, (void *)Task2, 1, NULL);
+    //create task here.
+    xTaskCreate( task1, "Task1", configMINIMAL_STACK_SIZE, (void *)Task1, 1, NULL);      
     
     // start scheduler now
     vTaskStartScheduler();            
