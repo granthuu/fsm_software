@@ -14,5 +14,11 @@ demo_6th_freeRTOS_TaskManagement/USER/*.310029647
 demo_6th_freeRTOS_TaskManagement/USER/*.bak
 demo_6th_freeRTOS_TaskManagement/USER/*.uvopt
 
+demo_7th_freeRTOS_QueueManagement/CORE/
+demo_7th_freeRTOS_QueueManagement/OBJ/
+demo_7th_freeRTOS_QueueManagement/STM32F10x_FWLib/
+demo_7th_freeRTOS_QueueManagement/SYSTEM/
+demo_7th_freeRTOS_QueueManagement/*.bat/
+
 FreeRTOSv8.2.2/
 freeRTOS Document/
