@@ -2678,6 +2678,20 @@ void vTaskMissedYield( void )
 
 #endif /* configUSE_TRACE_FACILITY */
 
+//example-6: add here. to test idleHook function.
+    
+/* Declare a variable that will be incremented by the hook function. */
+unsigned long ulIdleCycleCount = 0UL;
+
+void vApplicationIdleHook( void )
+{
+    /* This hook function does nothing but increment a counter. */
+    ulIdleCycleCount++;
+} 
+
+
+
+
 /*
  * -----------------------------------------------------------
  * The Idle task.
@@ -2733,7 +2747,7 @@ static portTASK_FUNCTION( prvIdleTask, pvParameters )
 
 		#if ( configUSE_IDLE_HOOK == 1 )
 		{
-			extern void vApplicationIdleHook( void );
+			//extern void vApplicationIdleHook( void );
 
 			/* Call the user defined function from within the idle task.  This
 			allows the application designer to add background functionality
