@@ -11,37 +11,55 @@
 #include "portable.h"
 #include "FreeRTOSConfig.h"
 
-void task2(void *pvParameters);
+/* declare a queueHandle variable, using to save queue handler. */
+xQueueHandle xQueue;
 
-xTaskHandle xTask2Handle;
 
-static const char * Task1 = "task1 is running \r\n";
-static const char * Task2 = "task2 is running \r\n";
 
-void task1(void * pvParameters)
+void vSendTask(void *pvParameters)
 {
-    char *TaskName = (char *)pvParameters;
-
+    long valueToSend;
+    portBASE_TYPE status;
+    
+    valueToSend = (long)pvParameters;
+    
     while(1)
     {
-        printf(TaskName);
+        status = xQueueSendToBack(xQueue, &valueToSend, 0);
+        if(status != pdPASS)
+        {
+            printf("could not send to the queue. \r\n");
+        }
         
-        xTaskCreate( task2, "Task2", configMINIMAL_STACK_SIZE, (void *)Task2, 2, &xTask2Handle);      
-        vTaskDelay(1000/portTICK_RATE_MS);
-    } 
+        //vTaskDelay(1000 / portTICK_RATE_MS);
+        taskYIELD();
+    }
 }
 
 
-void task2(void *pvParameters)
+void vReceiveTask(void *pvParameters)
 {
-    char *taskName = (char *)pvParameters;
-    printf(taskName);
-     
-    printf("task 2 is running and about to delete itself \r\n");
-    vTaskDelete(xTask2Handle);
-    // == vTaskDelete(NULL);
-}
+    long lReceivedValue;
+    portBASE_TYPE status;
 
+    while(1)
+    {        
+        if( uxQueueMessagesWaiting( xQueue ) != 0 )
+        {
+            printf( "Queue should have been empty! \r\n");
+        }
+
+        status = xQueueReceive( xQueue, &lReceivedValue, 3000 / portTICK_RATE_MS );
+        if( status == pdPASS )
+        {
+            printf( "Received = %ld\r\n", lReceivedValue );
+        }
+        else
+        {
+            printf( "Could not receive from the queue.\r\n" );
+        }
+    }
+}
 
 int main(void)
 {
@@ -49,12 +67,26 @@ int main(void)
     LED_Init();		  	
     uart_init(115200);
     
-    //create task here.
-    xTaskCreate( task1, "Task1", configMINIMAL_STACK_SIZE, (void *)Task1, 1, NULL);      
+    // create queue, can store 5 value which data type is long
+    xQueue = xQueueCreate(5, sizeof(long));
     
-    // start scheduler now
-    vTaskStartScheduler();            
-
+    if(xQueue != NULL)  // adjust the return value, to confirm whether create queue successful.
+    {
+        // Create two write queue task, priority = 1;
+        xTaskCreate(vSendTask, "SendTask1", configMINIMAL_STACK_SIZE, (void *)100, 1, NULL);
+        xTaskCreate(vSendTask, "SendTask2", configMINIMAL_STACK_SIZE, (void *)200, 1, NULL);
+        
+        // create one read queue task, priority = 2;
+        xTaskCreate(vReceiveTask, "RecTask", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+        
+        // start scheduler now
+        vTaskStartScheduler();            
+    }
+    else
+    {
+        // queue create unsuccessful here. add your code.
+    }
+    
     return 0;
 }
 
