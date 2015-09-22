@@ -105,8 +105,8 @@ int main(void)
 
     if(xBinarySemaphore != NULL)  
     {
-        xTaskCreate(Key_HanderFun,    "keyHandlerTask", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-        xTaskCreate(keyScan_Task,     "keyScanTask",     configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+        xTaskCreate(Key_HanderFun,    "keyHandlerTask", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+        xTaskCreate(keyScan_Task,     "keyScanTask",     configMINIMAL_STACK_SIZE, NULL, 1, NULL);
         xTaskCreate(LED_task,         "LED_task",        configMINIMAL_STACK_SIZE, NULL, 1, NULL);
         xSemaphoreTake(xBinarySemaphore, 0);
         
