@@ -77,7 +77,7 @@ void keyScan(void)
         case SHORT_KEY:
             if(KEY_IN() != 0)  // release key, short key
             {
-                keyScan_writeBuff(KEY_CODE + SHORT_KEY);
+                keyScan_writeBuff(KEY_CODE + SHORT_KEY_CODE);
                 keyState = NO_KEY;
             }
             else

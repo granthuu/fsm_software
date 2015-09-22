@@ -18,9 +18,10 @@
 #define LONG_KEY        2
 
 
-#define KEY_CODE             0x01
-#define FIRSTLONG_KEY_CODE   0x80
-#define AFTERLONG_KEY_CODE   0x90
+#define KEY_CODE             (unsigned char)0x00
+#define SHORT_KEY_CODE       (unsigned char)0x01 
+#define FIRSTLONG_KEY_CODE   (unsigned char)0x02
+#define AFTERLONG_KEY_CODE   (unsigned char)0x03
 
 
 void KEY_Init(void);//IO≥ı ºªØ
