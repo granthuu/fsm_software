@@ -19,6 +19,7 @@ demo_7th_freeRTOS_QueueManagement/OBJ/
 demo_7th_freeRTOS_QueueManagement/STM32F10x_FWLib/
 demo_7th_freeRTOS_QueueManagement/SYSTEM/
 demo_7th_freeRTOS_QueueManagement/*.bat/
+demo_8th_freeRTOS_InterruptManagement/OBJ/
 
 FreeRTOSv8.2.2/
 freeRTOS Document/
