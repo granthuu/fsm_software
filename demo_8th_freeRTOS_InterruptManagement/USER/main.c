@@ -15,58 +15,26 @@
 #include "semphr.h"
 
 
-/* declare a queueHandle variable, using to save queue handler. */
-xQueueHandle xQueue;
+/* declare a SemaphoreHandle_t variable, using to save queue handler. */
 SemaphoreHandle_t xBinarySemaphore = NULL;
 
-void vReceiveTask(void *pvParameters)
-{
-    char key ;
-    
-    portBASE_TYPE status;
 
-    while(1)
-    {        
-        if( uxQueueMessagesWaiting( xQueue ) != 0 )
-        {
-            /* 由于该优先级高，则导致queue队列一直为空，使得这句话不会执行。*/
-            printf( "Queue should have been empty! \r\n");
-        }
-        
-        /* 1. 设置成： 100/portTICK_RATE_MS，表示超时等待时间，当超过这个时间还没有数据到来，同样返回。*/
-        //status = xQueueReceive( xQueue, &key, 100 / portTICK_RATE_MS );
-        
-        /**
-         * \brief: 2. 设置成portMAX_DELAY，将永久等待，直到queue有数据可以读取
-         */
-        status = xQueueReceive( xQueue, &key, portMAX_DELAY );
-        if( status == pdPASS )
-        {
-            printf("Queue received Key pressed msg, key value: %d \r\n", key);
-        }
-        else
-        {
-            printf( "Could not receive from the queue.\r\n" );
-        }
-    }
-}
 
 void board_Init(void)
 {
     LED_Init();	
     KEY_Init();  
-    EXTIX_Init();
+    //EXTIX_Init();
     uart_init(115200);    
     
     // interrupt initialize
-	NVIC_Configuration();//    
+	//NVIC_Configuration();//    
 }
 
 
 void keyScan_Task(void *pvParameters)
 {
     char key = 0x00;
-    portBASE_TYPE status;
     
     while(1)
     {
@@ -92,12 +60,6 @@ void keyScan_Task(void *pvParameters)
                     printf("long after pressed \r\n");
                 break;
             }
-            
-//            status = xQueueSendToBack(xQueue, &key, 0);
-//            if(status != pdPASS)
-//            {
-//                printf("could not send to the queue. \r\n");
-//            }
         }
         
         vTaskDelay(10/portTICK_RATE_MS);
@@ -110,7 +72,7 @@ void LED_task(void *pvParameters)
     
     while(1)
     {
-        ((state = !state) == 1) ? RED_ON() : RED_OFF();
+        ((state = !state) == 1) ? GREEN_ON() : GREEN_OFF();
         vTaskDelay(1000 / portTICK_RATE_MS);
     }
 }
@@ -143,8 +105,9 @@ int main(void)
 
     if(xBinarySemaphore != NULL)  
     {
-        xTaskCreate(Key_HanderFun,     "keyHandlerTask",     configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-        //xTaskCreate(keyScan_Task,     "keyScanTask",     configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+        xTaskCreate(Key_HanderFun,    "keyHandlerTask", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+        xTaskCreate(keyScan_Task,     "keyScanTask",     configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+        xTaskCreate(LED_task,         "LED_task",        configMINIMAL_STACK_SIZE, NULL, 1, NULL);
         xSemaphoreTake(xBinarySemaphore, 0);
         
         // start scheduler now
