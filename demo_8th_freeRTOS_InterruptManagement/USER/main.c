@@ -16,10 +16,16 @@
 #include "semphr.h"
 
 
-/* declare a SemaphoreHandle_t variable, using to save queue handler. */
-SemaphoreHandle_t xBinarySemaphore = NULL;
+xQueueHandle xIntegerQueue;
+xQueueHandle xStringQueue;
 
-SemaphoreHandle_t xCountingSemaphore;
+static const char *pcString[] ={
+    
+    "String 0 \r\n",
+    "String 1 \r\n",
+    "String 2 \r\n",
+    "String 3 \r\n",
+};
 
 
 void board_Init(void)
@@ -38,7 +44,7 @@ void board_Init(void)
 void keyScan_Task(void *pvParameters)
 {
     char key = 0x00;
-    int keyCnt =0;
+    char i =0, sendInt = 0;
     
     while(1)
     {
@@ -49,12 +55,16 @@ void keyScan_Task(void *pvParameters)
             switch(key)
             {
                 case ( KEY_CODE + SHORT_KEY):
-                    printf("short key pressed, cnt: %d\r\n", ++keyCnt);
-                
-                    //xSemaphoreGive(xBinarySemaphore);
-                
-                    xSemaphoreGive(xCountingSemaphore);
-                    printf("key pressed, give semaphore \r\n");  
+                    
+                    printf("send Int: ");
+                    for(i=0; i<5; i++)
+                    {
+                        printf("%d ", sendInt);
+                        xQueueSendToBack(xIntegerQueue, &sendInt, 0);     // send integer: 1, 2, 3, 4, 5;  
+                        
+                        sendInt ++;
+                    }    
+                    printf("\r\n");
                 
                 break;
                 
@@ -84,20 +94,16 @@ void LED_task(void *pvParameters)
 }
 
 
-void Key_HanderFun(void *pvParameters)
+void PrintTask(void *pvParameters)
 {
-    //char state = 0;
+    char *pcStr;
     
     while(1)
     {
-        //xSemaphoreTake(xBinarySemaphore, portMAX_DELAY);
-        xSemaphoreTake(xCountingSemaphore, portMAX_DELAY);
-        printf("take semaphore here \r\n");
-        
-        //(state =!state) == 1 ? RED_ON() : RED_OFF();
+        xQueueReceive(xStringQueue, &pcStr, portMAX_DELAY);
+        printf("%s", pcStr);
     }
 }
-
 
 
 int main(void)
@@ -106,18 +112,17 @@ int main(void)
     board_Init();
     printf("board initialize finish. \r\n");
     
-    // create binary semaphore
-    //vSemaphoreCreateBinary(xBinarySemaphore);
-    
-    /* 在使用信号量之前先创建。本例中创建了一个计数信号量，最大计数值为10，初始计数值为0 */
-    xCountingSemaphore = xSemaphoreCreateCounting(10, 0);
-    
-    if(xCountingSemaphore != NULL)  
+    // create two queues
+    xIntegerQueue = xQueueCreate(10, sizeof(unsigned long));
+    xStringQueue  = xQueueCreate(10, sizeof(char *));
+
+    // 判断队列是否创建成功
+    if((xIntegerQueue != NULL) && (xStringQueue != NULL))      
     {
-        xTaskCreate(Key_HanderFun,    "keyHandlerTask", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
-        xTaskCreate(keyScan_Task,     "keyScanTask",     configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-        xTaskCreate(LED_task,         "LED_task",        configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-        //xSemaphoreTake(xBinarySemaphore, 0);
+        //xTaskCreate(Key_HanderFun,    "keyHandlerTask",  configMINIMAL_STACK_SIZE, NULL,   2, NULL);
+        xTaskCreate(keyScan_Task, "keyScanTask", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+        xTaskCreate(LED_task,     "LED_task",    configMINIMAL_STACK_SIZE, NULL, 1, NULL);
+        xTaskCreate(PrintTask,    "print_task",  configMINIMAL_STACK_SIZE, NULL, 2, NULL);
         
         // start scheduler now
         vTaskStartScheduler();            
@@ -127,7 +132,7 @@ int main(void)
         // semaphore create unsuccessful here. add your code.
         printf("semaphore create failed \r\n");
     }
-    
+
     return 0;
 }
 
@@ -136,36 +141,30 @@ void TIM3_IRQHandler(void)   //TIM3中断, 1ms
 {
     static char state = 0;
     static int cnt = 0;
-    static int sempCnt = 0;
+    unsigned long value;
+    
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
  
     if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET) //检查指定的TIM中断发生与否:TIM 中断源 
     {
         TIM_ClearITPendingBit(TIM3, TIM_IT_Update);  //清除TIMx的中断待处理位:TIM 中断源 
         
-        if(++cnt >= 1000)
+        if(++cnt >= 100) // per 100ms
         {
             cnt = 0;
             
-             xSemaphoreGiveFromISR(xCountingSemaphore, &xHigherPriorityTaskWoken);
-             printf("give semaphore, sempCnt: %d \r\n", ++sempCnt);
+            // 读取queue，直到读取队列为空。
+            while(xQueueReceiveFromISR(xIntegerQueue, &value, &xHigherPriorityTaskWoken) != errQUEUE_EMPTY)
+            {
+                printf("read value: %ld \r\n", value);
+                value &= 0x03;
+                
+                // 发送字符串队列。
+                xQueueSendToBackFromISR(xStringQueue, &pcString[value], &xHigherPriorityTaskWoken);
+            }
+                  
             ((state = !state) == 1) ? RED_ON() : RED_OFF(); 
         }   
     }
-}
-
-
-void EXTI0_IRQHandler(void)
-{   
-    static BaseType_t xHigherPriorityTaskWoken;
-    xHigherPriorityTaskWoken = pdFALSE;
-    
-	if(WK_UP == 1)
-	{	  
-        // Unblock the task by releasing the semaphore.
-        xSemaphoreGiveFromISR(xBinarySemaphore, &xHigherPriorityTaskWoken);
-        printf("key pressed, give semaphore \r\n");
-	}
-	EXTI_ClearITPendingBit(EXTI_Line0);  
 }
 
