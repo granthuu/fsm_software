@@ -4,6 +4,7 @@
 #include "delay.h"
 #include "sys.h"
 #include "usart.h"
+#include "timer.h"
 
 // FreeRTOS head file, add here.
 #include "FreeRTOS.h"
@@ -18,6 +19,7 @@
 /* declare a SemaphoreHandle_t variable, using to save queue handler. */
 SemaphoreHandle_t xBinarySemaphore = NULL;
 
+SemaphoreHandle_t xCountingSemaphore;
 
 
 void board_Init(void)
@@ -35,6 +37,7 @@ void board_Init(void)
 void keyScan_Task(void *pvParameters)
 {
     char key = 0x00;
+    int keyCnt =0;
     
     while(1)
     {
@@ -45,9 +48,11 @@ void keyScan_Task(void *pvParameters)
             switch(key)
             {
                 case ( KEY_CODE + SHORT_KEY):
-                    printf("short key pressed \r\n");
+                    printf("short key pressed, cnt: %d\r\n", ++keyCnt);
                 
-                    xSemaphoreGive(xBinarySemaphore);
+                    //xSemaphoreGive(xBinarySemaphore);
+                
+                    xSemaphoreGive(xCountingSemaphore);
                     printf("key pressed, give semaphore \r\n");  
                 
                 break;
@@ -86,7 +91,8 @@ void Key_HanderFun(void *pvParameters)
     
     while(1)
     {
-        xSemaphoreTake(xBinarySemaphore, portMAX_DELAY);
+        //xSemaphoreTake(xBinarySemaphore, portMAX_DELAY);
+        xSemaphoreTake(xCountingSemaphore, portMAX_DELAY);
         printf("take semaphore here \r\n");
         
         (state =!state) == 1 ? RED_ON() : RED_OFF();
@@ -99,16 +105,20 @@ int main(void)
 {
     // board initialize. 
     board_Init();
+    printf("board initialize finish. \r\n");
     
     // create binary semaphore
-    vSemaphoreCreateBinary(xBinarySemaphore);
-
-    if(xBinarySemaphore != NULL)  
+    //vSemaphoreCreateBinary(xBinarySemaphore);
+    
+    /* 在使用信号量之前先创建。本例中创建了一个计数信号量，最大计数值为10，初始计数值为0 */
+    xCountingSemaphore = xSemaphoreCreateCounting(10, 0);
+    
+    if(xCountingSemaphore != NULL)  
     {
         xTaskCreate(Key_HanderFun,    "keyHandlerTask", configMINIMAL_STACK_SIZE, NULL, 2, NULL);
         xTaskCreate(keyScan_Task,     "keyScanTask",     configMINIMAL_STACK_SIZE, NULL, 1, NULL);
         xTaskCreate(LED_task,         "LED_task",        configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-        xSemaphoreTake(xBinarySemaphore, 0);
+        //xSemaphoreTake(xBinarySemaphore, 0);
         
         // start scheduler now
         vTaskStartScheduler();            
@@ -121,6 +131,7 @@ int main(void)
     
     return 0;
 }
+
 
 void EXTI0_IRQHandler(void)
 {   
