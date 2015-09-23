@@ -28,9 +28,10 @@ void board_Init(void)
     KEY_Init();  
     //EXTIX_Init();
     uart_init(115200);    
+    TIM3_Int_Init(10,7200);// 10kHZ, 1ms interrupt.
     
     // interrupt initialize
-	//NVIC_Configuration();//    
+	NVIC_Configuration();//    
 }
 
 
@@ -83,11 +84,9 @@ void LED_task(void *pvParameters)
 }
 
 
-
-
 void Key_HanderFun(void *pvParameters)
 {
-    char state = 0;
+    //char state = 0;
     
     while(1)
     {
@@ -95,7 +94,7 @@ void Key_HanderFun(void *pvParameters)
         xSemaphoreTake(xCountingSemaphore, portMAX_DELAY);
         printf("take semaphore here \r\n");
         
-        (state =!state) == 1 ? RED_ON() : RED_OFF();
+        //(state =!state) == 1 ? RED_ON() : RED_OFF();
     }
 }
 
@@ -133,6 +132,29 @@ int main(void)
 }
 
 
+void TIM3_IRQHandler(void)   //TIM3中断, 1ms
+{
+    static char state = 0;
+    static int cnt = 0;
+    static int sempCnt = 0;
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+ 
+    if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET) //检查指定的TIM中断发生与否:TIM 中断源 
+    {
+        TIM_ClearITPendingBit(TIM3, TIM_IT_Update);  //清除TIMx的中断待处理位:TIM 中断源 
+        
+        if(++cnt >= 1000)
+        {
+            cnt = 0;
+            
+             xSemaphoreGiveFromISR(xCountingSemaphore, &xHigherPriorityTaskWoken);
+             printf("give semaphore, sempCnt: %d \r\n", ++sempCnt);
+            ((state = !state) == 1) ? RED_ON() : RED_OFF(); 
+        }   
+    }
+}
+
+
 void EXTI0_IRQHandler(void)
 {   
     static BaseType_t xHigherPriorityTaskWoken;
@@ -145,25 +167,5 @@ void EXTI0_IRQHandler(void)
         printf("key pressed, give semaphore \r\n");
 	}
 	EXTI_ClearITPendingBit(EXTI_Line0);  
-}
-
-
-void EXTI9_5_IRQHandler(void)
-{			
-	delay_ms(10);   //??			 
-	if(KEY0==0)	{
-		LED0=!LED0;
-	}
- 	 EXTI_ClearITPendingBit(EXTI_Line5);    //??LINE5???????  
-}
-
-
-void EXTI15_10_IRQHandler(void)
-{
-  delay_ms(10);    //??			 
-  if(KEY1==0)	{
-		LED1=!LED1;
-	}
-	 EXTI_ClearITPendingBit(EXTI_Line15);  //??LINE15?????
 }
 
