@@ -1,5 +1,7 @@
 #include "timer.h"
 #include "led.h"
+#include "FreeRTOSConfig.h"
+
 //////////////////////////////////////////////////////////////////////////////////	 
 //本程序只供学习使用，未经作者许可，不得用于其它任何用途
 //Mini STM32开发板
@@ -38,13 +40,16 @@ void TIM3_Int_Init(u16 arr,u16 psc)
 		ENABLE  //使能
 		);
 	NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;  //TIM3中断
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;  //先占优先级0级
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;  //从优先级3级
+    
+	//NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;   // 先占优先级0级
+	//NVIC_InitStructure.NVIC_IRQChannelSubPriority = 3;          // 从优先级3级
+    NVIC_SetPriority(TIM3_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY + 1);
+    
+    
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; //IRQ通道被使能
 	NVIC_Init(&NVIC_InitStructure);  //根据NVIC_InitStruct中指定的参数初始化外设NVIC寄存器
 
-	TIM_Cmd(TIM3, ENABLE);  //使能TIMx外设
-							 
+	TIM_Cmd(TIM3, ENABLE);  //使能TIMx外设						 
 }
 
 

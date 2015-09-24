@@ -21,7 +21,7 @@ xQueueHandle xStringQueue;
 
 static const char *pcString[] ={
     
-    "String 0 \r\n",
+    "String 0, demo for test now \r\n",
     "String 1 \r\n",
     "String 2 \r\n",
     "String 3 \r\n",
