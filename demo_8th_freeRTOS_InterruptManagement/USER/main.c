@@ -37,7 +37,7 @@ void board_Init(void)
     TIM3_Int_Init(10,7200);// 10kHZ, 1ms interrupt.
     
     // interrupt initialize
-	NVIC_Configuration();//    
+	NVIC_Configuration();   // bug fixed. by modify priority in FreeRTOSConfig.h file. 
 }
 
 
