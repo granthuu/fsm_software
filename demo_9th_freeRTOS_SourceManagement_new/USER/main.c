@@ -16,15 +16,14 @@
 #include "semphr.h"
 
 
-xQueueHandle xIntegerQueue;
-xQueueHandle xStringQueue;
 
-static const char *pcString[] ={
-    
-    "String 0, demo for test now \r\n",
-    "String 1 \r\n",
-    "String 2 \r\n",
-    "String 3 \r\n",
+xQueueHandle xPrintQueue;
+
+static const char *pcStringToPrint[] = {
+
+    "this is print string task 1.-------------------------------------------------\r\n",
+    "this is print string task 2.*************************************************\r\n",
+    "this is print string task 3.*************************************************\r\n",
 };
 
 
@@ -60,7 +59,7 @@ void keyScan_Task(void *pvParameters)
                     for(i=0; i<5; i++)
                     {
                         printf("%d ", sendInt);
-                        xQueueSendToBack(xIntegerQueue, &sendInt, 0);     // send integer: 1, 2, 3, 4, 5;  
+                        //xQueueSendToBack(xIntegerQueue, &sendInt, 0);     // send integer: 1, 2, 3, 4, 5;  
                         
                         sendInt ++;
                     }    
@@ -94,39 +93,37 @@ void LED_task(void *pvParameters)
 }
 
 
-void PrintTask(void *pvParameters)
+
+void Keeper_Task(void *pvParameters)
 {
     char *pcStr;
     
     while(1)
     {
-        xQueueReceive(xStringQueue, &pcStr, portMAX_DELAY);
-        printf("%s", pcStr);
+        /* Wait to receive message from queue, the task will blocking until data coming into queue. */
+        xQueueReceive(xPrintQueue, &pcStr, portMAX_DELAY);
+        
+        printf("%s", pcStr);   
     }
 }
 
-SemaphoreHandle_t xMutex;
 
 void PrintSring_Task(void *pvParameters)
 {
-    char *pcStr = (char *)pvParameters;
+    int iIndexToString;
+    
+    iIndexToString = (int)pvParameters;
     
     while(1)
     {
-        // 1. enter critical section.
-        xSemaphoreTake(xMutex, portMAX_DELAY);
+        /* send pointer data to queue, if full, then return */
+        xQueueSendToBack(xPrintQueue, &(pcStringToPrint[iIndexToString]), 0);
         
-        printf("%s", (char *)pcStr);
-        
-        // 2. exit critical section.
-        xSemaphoreGive(xMutex);
-        
-        vTaskDelay(1000/portTICK_RATE_MS);
+        vTaskDelay(500/portTICK_RATE_MS);
     }
 }
 
-const char * printStr1 = "this is print string task 1.-------------------------------------------------\r\n";
-const char * printStr2 = "this is print string task 2.*************************************************\r\n";
+
 
 int main(void)
 {
@@ -134,34 +131,17 @@ int main(void)
     board_Init();
     printf("board initialize finish. \r\n");
 
+    // create queues
+    xPrintQueue = xQueueCreate(5, sizeof(char *));
     
-#if 1
-
-    xMutex = xSemaphoreCreateMutex();
-    if( xMutex != NULL )
-    {
-        // The semaphore was created successfully.
-        // The semaphore can now be used.
-        xTaskCreate(PrintSring_Task, "printStringTask1", configMINIMAL_STACK_SIZE, (void *)printStr1, 1, NULL);
-        xTaskCreate(PrintSring_Task, "printStringTask2", configMINIMAL_STACK_SIZE, (void *)printStr2, 1, NULL);
-        
-        // start scheduler now
-        vTaskStartScheduler();            
-    }  
-  
-#else
-    
-    // create two queues
-    xIntegerQueue = xQueueCreate(10, sizeof(unsigned long));
-    xStringQueue  = xQueueCreate(10, sizeof(char *));
-
     // 判断队列是否创建成功
-    if((xIntegerQueue != NULL) && (xStringQueue != NULL))      
+    if(xPrintQueue != NULL)
     {
-        //xTaskCreate(Key_HanderFun,    "keyHandlerTask",  configMINIMAL_STACK_SIZE, NULL,   2, NULL);
-        xTaskCreate(keyScan_Task, "keyScanTask", configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-        xTaskCreate(LED_task,     "LED_task",    configMINIMAL_STACK_SIZE, NULL, 1, NULL);
-        xTaskCreate(PrintTask,    "print_task",  configMINIMAL_STACK_SIZE, NULL, 2, NULL);
+        xTaskCreate(PrintSring_Task, "PrintSring_Task1", configMINIMAL_STACK_SIZE, (void *)0, 1, NULL);
+        xTaskCreate(PrintSring_Task, "PrintSring_Task2", configMINIMAL_STACK_SIZE, (void *)1, 2, NULL);
+        
+        /* create keeper task here.*/
+        xTaskCreate(Keeper_Task, "PrintSring_Task2", configMINIMAL_STACK_SIZE, NULL, 0, NULL);    
         
         // start scheduler now
         vTaskStartScheduler();            
@@ -171,10 +151,30 @@ int main(void)
         // semaphore create unsuccessful here. add your code.
         printf("semaphore create failed \r\n");
     }
-#endif
     
     return 0;
 }
+
+
+void vApplicationTickHook(void)
+{
+    static int iCount = 0;
+    BaseType_t xHigherPrioritTaskWoken;
+
+	// We have not woken a task at the start of the ISR.
+	xHigherPrioritTaskWoken = pdFALSE; 
+    
+    iCount ++;
+    
+    /* systick interrupt = 10ms. hook interrupt time = 10ms * 100 = 1s */
+    if(iCount >= 100)
+    {
+        xQueueSendToFrontFromISR(xPrintQueue, &(pcStringToPrint[2]), &xHigherPrioritTaskWoken);
+        
+        iCount = 0;
+    }
+}
+
 
 
 void TIM3_IRQHandler(void)   //TIM3中断, 1ms
@@ -192,17 +192,7 @@ void TIM3_IRQHandler(void)   //TIM3中断, 1ms
         if(++cnt >= 100) // per 100ms
         {
             cnt = 0;
-            
-            // 读取queue，直到读取队列为空。
-            while(xQueueReceiveFromISR(xIntegerQueue, &value, &xHigherPriorityTaskWoken) != errQUEUE_EMPTY)
-            {
-                printf("read value: %ld \r\n", value);
-                value &= 0x03;
-                
-                // 发送字符串队列。
-                xQueueSendToBackFromISR(xStringQueue, &pcString[value], &xHigherPriorityTaskWoken);
-            }
-                  
+      
             ((state = !state) == 1) ? RED_ON() : RED_OFF(); 
         }   
     }
