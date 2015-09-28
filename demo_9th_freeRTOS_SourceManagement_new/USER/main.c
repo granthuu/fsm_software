@@ -125,17 +125,39 @@ void PrintSring_Task(void *pvParameters)
     }
 }
 
+xTaskHandle printTaskHandle;
+
 /* task for test printf function, see printf-stdarg.c file. */
 extern void print_test(void);
 void printf_test_task(void *pvParameters)
 {
     while(1)
     {
-        print_test();
-        
+        print_test();   
         vTaskDelay(1000/portTICK_RATE_MS);
     }  
 }
+
+
+void vApplicationStackOverflowHook( xTaskHandle *pxTask, signed portCHAR *pcTaskName )
+{
+    printf("stack overflow \r\n");
+}
+
+
+void detectStack_task(void *pvParameters)
+{
+    unsigned portBASE_TYPE stackRemainSize ;
+    
+    while(1)
+    {
+        stackRemainSize = uxTaskGetStackHighWaterMark(printTaskHandle);
+        printf("printTask stack remain size: --------------------------------------------- %lu \r\n", stackRemainSize);
+        
+        vTaskDelay(500/portTICK_RATE_MS);
+    }  
+}
+
 
 
 int main(void)
@@ -157,8 +179,14 @@ int main(void)
         xTaskCreate(Keeper_Task, "PrintSring_Task2", configMINIMAL_STACK_SIZE, NULL, 0, NULL);   
         
         
+        
+        // add task for debugging -----------------------------------------------------------------------
         /* task for test printf function. */
-        xTaskCreate(printf_test_task, "printf_test_task", configMINIMAL_STACK_SIZE, NULL, 3, NULL);  
+        xTaskCreate(printf_test_task, "printf_test_task", configMINIMAL_STACK_SIZE, NULL, 3, &printTaskHandle);  
+        
+        /* detect stack size task. */
+        xTaskCreate(detectStack_task, "detectStack_task", configMINIMAL_STACK_SIZE, NULL, 3, NULL);  
+        
         
         // start scheduler now
         vTaskStartScheduler();            
@@ -178,7 +206,7 @@ void vApplicationTickHook(void)
     static int iCount = 0;
     BaseType_t xHigherPrioritTaskWoken;
 
-	// We have not woken a task at the start of the ISR.
+	// We have not woken a task at the start of the ISR.int
 	xHigherPrioritTaskWoken = pdFALSE; 
     
     iCount ++;

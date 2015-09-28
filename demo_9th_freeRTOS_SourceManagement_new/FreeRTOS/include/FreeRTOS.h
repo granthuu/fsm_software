@@ -200,7 +200,7 @@ extern "C" {
 #endif
 
 #ifndef INCLUDE_uxTaskGetStackHighWaterMark
-	#define INCLUDE_uxTaskGetStackHighWaterMark 0
+	#define INCLUDE_uxTaskGetStackHighWaterMark 1
 #endif
 
 #ifndef INCLUDE_eTaskGetState
@@ -397,7 +397,7 @@ extern "C" {
 #endif
 
 #ifndef configCHECK_FOR_STACK_OVERFLOW
-	#define configCHECK_FOR_STACK_OVERFLOW 0
+	#define configCHECK_FOR_STACK_OVERFLOW 2
 #endif
 
 /* The following event macros are embedded in the kernel API calls. */
