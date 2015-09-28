@@ -56,6 +56,17 @@ int fputc(int ch, FILE *f)
     USART1->DR = (u8) ch;      
 	return ch;
 }
+
+
+int sendChar(int ch)
+{
+	while((USART1->SR&0X40)==0);     //循环发送,直到发送完毕   
+    USART1->DR = (u8) ch; 
+    
+	return ch;   
+}
+
+
 #endif 
 
 /*使用microLib的方法*/

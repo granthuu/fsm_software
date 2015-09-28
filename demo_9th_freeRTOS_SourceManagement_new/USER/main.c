@@ -5,6 +5,7 @@
 #include "sys.h"
 #include "usart.h"
 #include "timer.h"
+#include "printf-stdarg.h"
 
 // FreeRTOS head file, add here.
 #include "FreeRTOS.h"
@@ -118,11 +119,23 @@ void PrintSring_Task(void *pvParameters)
     {
         /* send pointer data to queue, if full, then return */
         xQueueSendToBack(xPrintQueue, &(pcStringToPrint[iIndexToString]), 0);
+        //print_test();
         
-        vTaskDelay(500/portTICK_RATE_MS);
+        vTaskDelay(1000/portTICK_RATE_MS);
     }
 }
 
+/* task for test printf function, see printf-stdarg.c file. */
+extern void print_test(void);
+void printf_test_task(void *pvParameters)
+{
+    while(1)
+    {
+        print_test();
+        
+        vTaskDelay(1000/portTICK_RATE_MS);
+    }  
+}
 
 
 int main(void)
@@ -141,7 +154,11 @@ int main(void)
         xTaskCreate(PrintSring_Task, "PrintSring_Task2", configMINIMAL_STACK_SIZE, (void *)1, 2, NULL);
         
         /* create keeper task here.*/
-        xTaskCreate(Keeper_Task, "PrintSring_Task2", configMINIMAL_STACK_SIZE, NULL, 0, NULL);    
+        xTaskCreate(Keeper_Task, "PrintSring_Task2", configMINIMAL_STACK_SIZE, NULL, 0, NULL);   
+        
+        
+        /* task for test printf function. */
+        xTaskCreate(printf_test_task, "printf_test_task", configMINIMAL_STACK_SIZE, NULL, 3, NULL);  
         
         // start scheduler now
         vTaskStartScheduler();            
@@ -181,9 +198,9 @@ void TIM3_IRQHandler(void)   //TIM3中断, 1ms
 {
     static char state = 0;
     static int cnt = 0;
-    unsigned long value;
+//    unsigned long value;
     
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+//    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
  
     if (TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET) //检查指定的TIM中断发生与否:TIM 中断源 
     {
