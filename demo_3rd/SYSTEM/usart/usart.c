@@ -133,18 +133,13 @@ void uart_init(u32 bound){
 }
 
 
-
-
-#if 1
-
-
-#define RX_BUF_SIZE 50
+#define RX_BUF_SIZE 100
 u8 receive_buffer[RX_BUF_SIZE] ={0};
 u8 *re_ptr_r = NULL;
 u8 *re_ptr_w = NULL;
 u8 receive_ok = 0;
 
-#define VALID_DATA_LEN 20
+#define VALID_DATA_LEN 50
 u8 uart_package[VALID_DATA_LEN] ={0};
 void rx_process_check(void);
 
@@ -171,26 +166,26 @@ void rec_data(char data)
         re_ptr_w++;   
 }
 
+#define ENA_INT() __enable_irq()
+#define DIS_INT() __disable_irq()
+//#define ENA_INT() 
+//#define DIS_INT() 
+void rx_process_check(void);
+
 void USART1_IRQHandler(void)                	//串口1中断服务程序
 {
 	if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  //接收中断(接收到的数据必须是0x0d 0x0a结尾)
 	{
 		rx_data = USART_ReceiveData(USART1);   //(USART1->DR);	//读取接收到的数据
         rx_flag = 1; 
-       
-        /* 1. get data from serial port, and write it to rx_buffer */
-        *re_ptr_w = rx_data;
-        if(re_ptr_w == &receive_buffer[RX_BUF_SIZE -1])
-            re_ptr_w = &receive_buffer[0];
-        else
-            re_ptr_w++;
         
-        /* 2. parse the message in buffer, it will set valid command flag when 
-              detect there are some valid cmd in buffer
-        */
-        //rx_process_check(); 		 
+        DIS_INT();
+        rec_data(rx_data);
+        ENA_INT();	
+
+        //rx_process_check();    
      } 
-     //USART1->SR &= ~USART_FLAG_RXNE;	          // clear interrupt
+     USART1->SR &= ~USART_FLAG_RXNE;	          // clear interrupt
 } 
 
 #define KEYBUFFSIZE     10
@@ -199,10 +194,7 @@ char key_indexW = 0;
 char key_indexR = 0;
 char key_count = 0;
 
-#define ENA_INT() __enable_irq()
-#define DIS_INT() __disable_irq()
-//#define ENA_INT() 
-//#define DIS_INT() 
+
 
 /**
  * \brief: 与FIFO相关操作的函数的定义
@@ -269,22 +261,21 @@ char key_readBuff(void)
 */
 void rx_process_check(void)
 {
-    uint8_t i,j,k,l;
+    uint8_t i =0,j =0, k =0, l = 0;
     uint8_t *rdr;
     
     DIS_INT(); 
-    if(*re_ptr_r != 0x86)
+    while(*re_ptr_r != 0x86)
     {
         if(re_ptr_r == &receive_buffer[RX_BUF_SIZE-1]) 
             re_ptr_r = &receive_buffer[0];
         else re_ptr_r++;
         
-        if(re_ptr_r == re_ptr_w) 
+        if(re_ptr_r == re_ptr_w) // 表示读指针赶上了写指针。
         {
             ENA_INT(); 
             return;
-        }
-            
+        }  
     }	
     rdr = re_ptr_r;  //这里e_ptr_r　指向　起始值　０ｘ８６
     
@@ -299,8 +290,15 @@ void rx_process_check(void)
     }
         
     
-    i = *rdr;
-
+    i = *rdr;   // i: 表示数据帧定义的长度。
+    // grant add here.
+    if(i > 10)
+    {
+	    if(re_ptr_r == &receive_buffer[RX_BUF_SIZE-1]) re_ptr_r = &receive_buffer[0];
+	    else re_ptr_r++;     
+    }
+    
+    
     if(re_ptr_w > re_ptr_r) 
         k = re_ptr_w - re_ptr_r;  // k: 表示数据段的长度
     else	
@@ -378,171 +376,5 @@ void rx_process_check(void)
     ENA_INT(); 
 }
 
-#else
 
 
-char RedState = 0;
-char GreenState = 0;
-char BlackState = 0;
-char DateState = 0;
-
-
-void USART1_IRQHandler(void)                	//串口1中断服务程序
-{
-#if 1
-    
-    u8 Res;
-    static u8 len = 0;
-    if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  //接收中断(接收到的数据必须是0x0d 0x0a结尾)
-    {
-        Res = USART_ReceiveData(USART1);                   //(USART1->DR);	//读取接收到的数据
-        
-        printf("%c", Res); 
-        
-        switch(RedState)
-        {
-            case 0:
-                if(Res == 'r')  RedState =1;
-                else            RedState =0;                    
-            break;
-            
-            case 1:
-                if(Res == 'e')  RedState =2;
-                else            RedState =0;                    
-            break;         
-            
-            case 2:
-                if(Res == 'd')  {RedState =0; RED_ON(); }
-                else            RedState =0;                    
-            break;      
-        }
-
-        switch(GreenState)
-        {
-            case 0:
-                if(Res == 'g')  GreenState =1;
-                else            GreenState =0;                    
-            break;
-            
-            case 1:
-                if(Res == 'r')  GreenState =2;
-                else            GreenState =0;                    
-            break;    
-
-            case 2:
-                if(Res == 'e')  GreenState =3;
-                else            GreenState =0;                    
-            break;  
-            
-            case 3:
-                if(Res == 'e')  GreenState =4;
-                else            GreenState =0;                    
-            break;  
-            
-            case 4:
-                if(Res == 'n')  {GreenState =0; GREEN_ON(); }
-                else            GreenState =0;                    
-            break;  
-        }    
-
-        switch(BlackState)
-        {
-            case 0:
-                if(Res == 'b')  BlackState =1;
-                else            BlackState =0;                    
-            break;
-            
-            case 1:
-                if(Res == 'l')  BlackState =2;
-                else            BlackState =0;                    
-            break;    
-
-            case 2:
-                if(Res == 'a')  BlackState =3;
-                else            BlackState =0;                    
-            break;  
-            
-            case 3:
-                if(Res == 'c')  BlackState =4;
-                else            BlackState =0;                    
-            break;  
-            
-            case 4:
-                if(Res == 'k')  {BlackState =0; GREEN_OFF(); RED_OFF(); }
-                else            BlackState =0;                    
-            break;  
-        } 
-        
-        
-        switch(DateState)
-        {
-            case 0:
-                if(Res == '#')  DateState = 1;
-                else            DateState = 0;
-            break;
-            
-            case 1:
-                // #20150610*
-                len ++;
-                if(len >= 9)
-                {
-                    len = 0;
-                    DateState = 0;
-                    
-                    if(Res == '*')
-                    {
-                        printf("\r\n received correct Date \r\n");
-                    }
-                    else
-                        //;
-                        printf("\r\n Error Date \r\n");
-                }
-            break;
-        }
-    } 
-        
-        
-#else        
-        
-        
-	u8 Res;
-#ifdef OS_TICKS_PER_SEC	 	//如果时钟节拍数定义了,说明要使用ucosII了.
-	OSIntEnter();    
-#endif
-    if(USART_GetITStatus(USART1, USART_IT_RXNE) != RESET)  //接收中断(接收到的数据必须是0x0d 0x0a结尾)
-    {
-        Res =USART_ReceiveData(USART1);//(USART1->DR);	//读取接收到的数据
-
-        if((USART_RX_STA&0x8000)==0)//接收未完成
-        {
-            if(USART_RX_STA&0x4000)//接收到了0x0d
-            {
-                if(Res!=0x0a)USART_RX_STA=0;//接收错误,重新开始
-                else USART_RX_STA|=0x8000;	//接收完成了 
-            }
-            else //还没收到0X0D
-            {	
-                if(Res==0x0d)USART_RX_STA|=0x4000;
-                else
-                {
-                    USART_RX_BUF[USART_RX_STA&0X3FFF]=Res ;
-                    USART_RX_STA++;
-                    
-                    if(USART_RX_STA>(USART_REC_LEN-1))
-                        USART_RX_STA=0;//接收数据错误,重新开始接收	  
-                }		 
-            }
-        }   		 
-    } 
-     
-     
-#ifdef OS_TICKS_PER_SEC	 	//如果时钟节拍数定义了,说明要使用ucosII了.
-	OSIntExit();  											 
-#endif
-     
-     
-#endif
-     
-} 
-
-#endif
