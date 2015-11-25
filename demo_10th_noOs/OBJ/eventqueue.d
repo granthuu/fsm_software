@@ -1,0 +1,13 @@
+..\obj\eventqueue.o: ..\DevInterface\eventQueue.c
+..\obj\eventqueue.o: ..\DevInterface\EventQueue.h
+..\obj\eventqueue.o: ..\USER\stm32f10x.h
+..\obj\eventqueue.o: ..\CORE\core_cm3.h
+..\obj\eventqueue.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+..\obj\eventqueue.o: ..\USER\system_stm32f10x.h
+..\obj\eventqueue.o: ..\USER\stm32f10x_conf.h
+..\obj\eventqueue.o: ..\STM32F10x_FWLib\inc\stm32f10x_gpio.h
+..\obj\eventqueue.o: ..\USER\stm32f10x.h
+..\obj\eventqueue.o: ..\STM32F10x_FWLib\inc\stm32f10x_rcc.h
+..\obj\eventqueue.o: ..\STM32F10x_FWLib\inc\stm32f10x_tim.h
+..\obj\eventqueue.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
+..\obj\eventqueue.o: ..\STM32F10x_FWLib\inc\misc.h

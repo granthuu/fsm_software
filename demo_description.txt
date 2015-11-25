@@ -1,5 +1,8 @@
 基于正点原子V3.0的开发板以及例程编写。
 ------------------------------------------------------------------------------
+见博客分析。
+http://blog.chinaunix.net/xmlrpc.php?r=blog/index&uid=22072065&cid=211595&pattern=abstract&page=1
+
 
 demo_1st:
 	如何写非阻塞的按键程序，只包括短按键。例程实现了key0,1,2的短按键功能。
@@ -22,3 +25,24 @@ demo_5th_NoFreeRTOS:
 demo_5th_FreeRTOS:
 	在不含操作系统的基础上加了FreeRTOS.
 	创建了两个LED的任务。
+	
+demo_6th_freeRTOS_TaskManagement	
+	任务管理
+	
+demo_7th_freeRTOS_QueueManagement
+	队列管理
+	
+demo_8th_freeRTOS_InterruptManagement
+	中断管理
+	
+demo_9th_freeRTOS_SourceManagement_new
+	资源管理
+	
+
+======================================================================================
+
+2015-11-25.
+阅读了SB代码后，自己总结编程经验。
+
+demo_10th_noOs：
+	不用操作系统。增加事件队列机制。
