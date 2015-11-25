@@ -2,7 +2,6 @@
 "..\obj\main.o"
 "..\obj\stm32f10x_it.o"
 "..\obj\system_stm32f10x.o"
-"..\obj\printf-stdarg.o"
 "..\obj\led.o"
 "..\obj\key.o"
 "..\obj\timer.o"
@@ -19,12 +18,12 @@
 "..\obj\stm32f10x_exti.o"
 "..\obj\misc.o"
 "..\obj\croutine.o"
-"..\obj\heap_2.o"
 "..\obj\list.o"
 "..\obj\port.o"
 "..\obj\queue.o"
 "..\obj\tasks.o"
 "..\obj\timers.o"
+"..\obj\heap_4.o"
 --strict --scatter "..\OBJ\LED.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

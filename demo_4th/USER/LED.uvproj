@@ -441,6 +441,11 @@
               <FileName>main_LongShortKey.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\main_LongShortKey.c</FilePath>
+            </File>
+            <File>
+              <FileName>main_withLCD.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\main_withLCD.c</FilePath>
               <FileOption>
                 <CommonProperty>
                   <UseCPPCompiler>2</UseCPPCompiler>
@@ -481,11 +486,6 @@
                   </Cads>
                 </FileArmAds>
               </FileOption>
-            </File>
-            <File>
-              <FileName>main_withLCD.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\main_withLCD.c</FilePath>
             </File>
             <File>
               <FileName>stm32f10x_it.c</FileName>

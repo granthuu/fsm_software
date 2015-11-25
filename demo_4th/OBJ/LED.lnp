@@ -1,5 +1,5 @@
 --cpu Cortex-M3
-"..\obj\main_withlcd.o"
+"..\obj\main_longshortkey.o"
 "..\obj\stm32f10x_it.o"
 "..\obj\system_stm32f10x.o"
 "..\obj\app_longshortkey.o"

@@ -133,7 +133,8 @@ void printf_test_task(void *pvParameters)
 {
     while(1)
     {
-        print_test();   
+        //print_test();   
+        printf("call function: print_test()\n");
         vTaskDelay(1000/portTICK_RATE_MS);
     }  
 }
@@ -242,4 +243,4 @@ void TIM3_IRQHandler(void)   //TIM3ÖÐ¶Ï, 1ms
         }   
     }
 }
-
+//..\OBJ\LED.axf: Error: L6218E: Undefined symbol print_test (referred from main.o).

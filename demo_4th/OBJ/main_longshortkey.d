@@ -9,6 +9,7 @@
 ..\obj\main_longshortkey.o: ..\STM32F10x_FWLib\inc\stm32f10x_gpio.h
 ..\obj\main_longshortkey.o: ..\USER\stm32f10x.h
 ..\obj\main_longshortkey.o: ..\STM32F10x_FWLib\inc\stm32f10x_rcc.h
+..\obj\main_longshortkey.o: ..\STM32F10x_FWLib\inc\stm32f10x_tim.h
 ..\obj\main_longshortkey.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
 ..\obj\main_longshortkey.o: ..\STM32F10x_FWLib\inc\misc.h
 ..\obj\main_longshortkey.o: ..\SYSTEM\delay\delay.h

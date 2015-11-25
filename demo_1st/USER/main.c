@@ -6,7 +6,7 @@
 
 
 
-char keyBuff[KEYBUFFSIZE];
+char keyValue = 0;
 uint8_t flag = 0;
 
 
@@ -49,32 +49,29 @@ void SysTick_Handler(void)
             keyScanIO();
         }
         
-        for(i =0; i<4; i++)
+
+        keyValue= key_readBuff();   /* 注意这里是要调用读取buffer的函数。利用读取函数将按键操作和上层隔离开来。 */
+        if(keyValue != 0x00)
         {
-            keyBuff[i] = key_readBuff();   /* 注意这里是要调用读取buffer的函数。利用读取函数将按键操作和上层隔离开来。 */
-            if(keyBuff[i] != 0x00){
-                switch(keyBuff[i]){
-                    
-                    case KEY0_CODE:                   
-                        printf("key0 pressed now \r\n");
-                    break;
-                    
-                    case KEY1_CODE:
-                        printf("key1 pressed now \r\n");
-                    break;   
-                    
-                    case KEY2_CODE:
-                        printf("key2 pressed now \r\n");
-                    break;
-                    
-                    default:
-                        break;
-                    
-                }
+            switch(keyValue)
+            { 
+                case KEY0_CODE:                   
+                    printf("key0 pressed now \r\n");
+                break;
                 
-                keyBuff[i] = 0x00;
+                case KEY1_CODE:
+                    printf("key1 pressed now \r\n");
+                break;   
+                
+                case KEY2_CODE:
+                    printf("key2 pressed now \r\n");
+                break;
+                
+                default:
+                    break;  
             }
+            keyValue = 0x00;
         }
 	}
- }
+}
 

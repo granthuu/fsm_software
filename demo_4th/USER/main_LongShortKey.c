@@ -34,43 +34,43 @@ extern char keyBuff[KEYBUFFSIZE];
 
 int main(void)
  {	
+    u8 state1 = 0, state2 = 0;
     char key =0;
-	LED_Init();		  	// 初始化与LED连接的硬件接口
-    KEY_Init();
+    
+	LED_Init();		  	      // 初始化与LED连接的硬件接口
+    KEY_Init();               // 按键初始化
+    delay_init();	    	  // 延时函数初始化	 
+    uart_init(9600);          // 设置串口波特率
     SysTick_Init();
-    uart_init(9600);
-    NVIC_Configuration();
-     
-    bufPara_initial();
-    key_paraInit();
+    //TIM3_Int_Init(100,7199);  // 10Khz的计数频率，计数到100为10ms  
+    NVIC_Configuration();     // 设置中断分组信息
      
 	while(1)
 	{
-        if(rx_flag)
+        if(flag)  // 10ms中断函数，这是利用timer来产生中断
         {
-            rx_flag =0;
-            rx_process_check(); 	 
+            flag =0;
+            keyScan();
         }
-        
+
         key = key_readBuff();
-        if(key !=0)
+        if(key != 0x00)
         {
-            switch(key){
-                
-                case 0x01:
-                    printf("CMD 1 \r\n");
+            switch(key)
+            {
+                case (KEY0_CODE+KEY_SHORT_CODE):
+                    printf("short key pressed \r\n");
+                    (state1 = !state1) == 1 ? RED_ON() : RED_OFF();
                 break;
                 
-                case 0x02:
-                    printf("CMD 2 \r\n");
+                case (KEY0_CODE+KEY_FIRST_LONG_CODE):
+                    printf("long first pressed \r\n");
+                    (state2 = !state2) == 1 ? GREEN_ON() : GREEN_OFF();
                 break;
                 
-                case 0x03:
-                    printf("CMD 3 \r\n");
-                break;
-                
-                case 0xaa:
-                    printf("CMD N \r\n");
+                case (KEY0_CODE+KEY_AFTER_LONG_CODE):
+                    printf("long after pressed \r\n");
+                    (state2 = !state2) == 1 ? GREEN_ON() : GREEN_OFF();
                 break;
             }
         }
