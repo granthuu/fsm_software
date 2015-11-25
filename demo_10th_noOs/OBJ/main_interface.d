@@ -19,3 +19,4 @@
 ..\obj\main_interface.o: ..\HARDWARE\KEY\key.h
 ..\obj\main_interface.o: ..\DevInterface\eventQueue.h
 ..\obj\main_interface.o: ..\DevInterface\uart_intf.h
+..\obj\main_interface.o: ..\DevInterface\Timer_intf.h

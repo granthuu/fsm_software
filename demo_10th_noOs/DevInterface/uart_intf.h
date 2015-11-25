@@ -14,5 +14,7 @@ void diUart_writeChar(uint8_t buffer);
 bool diUart_writeReady(void);
 extern void DI_CallbackISR_ByteReceived(uint8_t byte);
 
+void printTask_init(void);
+
 #endif /* DIUART_H_ */
 

@@ -6,6 +6,8 @@
 
 #include "eventQueue.h"
 #include "uart_intf.h"
+#include "Timer_intf.h"
+
 
 uint8_t flag = 0;
 
@@ -24,6 +26,7 @@ void SysTick_Init(void)
 void SysTick_Handler(void)
 {
     flag = 1;  
+    Callback_Timer_TickISR(); 
 }
 
 
@@ -38,11 +41,14 @@ void board_init(void)
     
     //TIM3_Int_Init(100,7199);  // 10Khz的计数频率，计数到100为10ms  
     NVIC_Configuration();     // 设置中断分组信息
+    
+    printTask_init();
 }
 
 
 int main(void)
 {	
+    //static int cnt = 0;
     volatile static event_t* event;
     board_init();
      
@@ -54,6 +60,15 @@ int main(void)
             event->execute(event->data);
         }
         
+//        if(flag)
+//        {
+//            flag = 0;
+//            if(cnt ++ >= 100)
+//            {
+//                cnt = 0;
+//                printf("1s interrupt \n");
+//            }
+//        }
 	}
  }
 

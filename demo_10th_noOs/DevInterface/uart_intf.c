@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "usart.h"
 
+#include "Timer_intf.h"
+
 uint8_t receivedChar;
 static void OnCharRecEvent(void* data);
 static event_t charRecEvent = EVENT_INIT(OnCharRecEvent);
@@ -36,5 +38,28 @@ void USART1_IRQHandler(void)
         // 添加事件，通知主程序，发生中断接收事件。
         // 进行异步处理。
         EventQueue_Enqueue_ISR(&charRecEvent);  /* 中断事件发生 */
+        
     }    
 }
+
+//-----------------------------------------------------------------------------------
+// add print_task
+
+static softtimer_t  printTask_timer = TIMER_INIT;
+#define HAL_READ_TRH_PERIOD     1000
+
+void printTask_handler(void* data)
+{
+    printf("printTask_handler \n");
+}
+
+
+void printTask_init(void)
+{
+    /* 添加循环打印任务到 Software_timer 链表中 */
+    // timer时间到的时候，通知事件发生。
+    Timer_StartPeriodic(&printTask_timer,  HAL_READ_TRH_PERIOD,  printTask_handler);
+}
+
+
+

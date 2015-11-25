@@ -15,3 +15,4 @@
 ..\obj\uart_intf.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
 ..\obj\uart_intf.o: ..\SYSTEM\usart\usart.h
 ..\obj\uart_intf.o: ..\SYSTEM\sys\sys.h
+..\obj\uart_intf.o: ..\DevInterface\Timer_intf.h
