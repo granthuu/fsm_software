@@ -18,8 +18,10 @@
 #define KEYBUFFSIZE     4
 
 void key_paraInit(void);
-void keyScan(void);
+//void keyScan(void);
 char key_readBuff(void);
+void keyScanTask_init(void);
+
 
 #endif
 

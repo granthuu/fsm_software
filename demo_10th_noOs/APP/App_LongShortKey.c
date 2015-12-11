@@ -1,16 +1,15 @@
 #include "App_LongShortKey.h"
 #include <stdio.h>
+#include "Timer_intf.h"
 
 
 #define KEY_EVENT_QUEUE_DEBUG
 
 #ifdef KEY_EVENT_QUEUE_DEBUG
-// grant add here.
 #include "eventQueue.h"
 
 static void keyScanEvent(void *data);
 static event_t keyPressEvent = EVENT_INIT(keyScanEvent);
-
 #endif
 
 
@@ -89,11 +88,11 @@ char key_readBuff(void)
 /**
  * \brief: 
  */
-
 uint8_t keyCodeBuff[1];
 
-void keyScan(void)
+void keyScan(void *data)
 {
+
     
     if(key0_Status == KEY_SHORT_PRESS)
         key0_TimeS ++;
@@ -123,7 +122,6 @@ void keyScan(void)
 
                 keyCodeBuff[0] = KEY_SHORT_CODE + KEY0_CODE;
                 EventQueue_EnqueueWithData(&keyPressEvent, keyCodeBuff);
-                //EventQueue_Enqueue_ISR(&keyPressEvent);
 #endif             
                 
                 // 返回到按键未按下模式
@@ -138,7 +136,6 @@ void keyScan(void)
                     
                    keyCodeBuff[0] = KEY_FIRST_LONG_CODE + KEY0_CODE;
                    EventQueue_EnqueueWithData(&keyPressEvent, keyCodeBuff);
-                     //EventQueue_Enqueue_ISR(&keyPressEvent);
 #endif        
 
                     
@@ -163,10 +160,8 @@ void keyScan(void)
                                         
                     keyCodeBuff[0] = KEY_AFTER_LONG_CODE + KEY0_CODE;
                     EventQueue_EnqueueWithData(&keyPressEvent, keyCodeBuff);
-                    // EventQueue_Enqueue_ISR(&keyPressEvent);
 #endif        
 
-                    
                     key0_TimeL = 0;
                 }    
             }      
@@ -177,7 +172,7 @@ void keyScan(void)
 
 void keyScanEvent(void *data)
 {
-    uint8_t *keyCode = (uint8_t *)keyPressEvent.data;
+    uint8_t *keyCode = (uint8_t *)data;
     uint8_t key = *keyCode;
     
     switch(key){
@@ -200,6 +195,19 @@ void keyScanEvent(void *data)
     }
 }
 
+
+
+#define KEY_SCAN_PERIOD_MS     10
+static softtimer_t  keyScanTask_timer = TIMER_INIT;
+
+
+void keyScanTask_init(void)
+{
+    /* 添加循环打印任务到 Software_timer 链表中 */
+    // timer时间到的时候，通知事件发生。
+    Timer_StartPeriodic(&keyScanTask_timer,  KEY_SCAN_PERIOD_MS,  keyScan);
+    printf("software time initialize \n");
+}
 
 
 
