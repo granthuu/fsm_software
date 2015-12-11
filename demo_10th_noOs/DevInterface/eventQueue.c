@@ -48,7 +48,6 @@ static void EventQueue_EnqueueInternal(event_t* event)
         event->next = NULL;
         eventQueue.nrOfPending++;
 
-
         if (eventQueue.head == NULL)
         {
             eventQueue.head = event;

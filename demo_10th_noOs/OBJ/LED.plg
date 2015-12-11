@@ -4,16 +4,16 @@
 <h1>µVision Build Log</h1>
 <h2>Project:</h2>
 C:\work dir\fsm_software\demo_10th_noOs\USER\LED.uvproj
-Project File Date:  10/19/2015
+Project File Date:  11/25/2015
 
 <h2>Output:</h2>
-Build target 'Target 1'
-compiling main_LongShortKey.c...
-main_LongShortKey.c(7): error:  #5: cannot open source input file "eventQueue.h": No such file or directory
+Rebuild target 'Target 1'
+compiling main_interface.c...
 compiling stm32f10x_it.c...
 compiling system_stm32f10x.c...
 compiling eventQueue.c...
-..\DevInterface\EventQueue.h(4): error:  #5: cannot open source input file "Common.h": No such file or directory
+compiling uart_intf.c...
+compiling Timer_intf.c...
 compiling App_LongShortKey.c...
 compiling led.c...
 compiling key.c...
@@ -22,6 +22,7 @@ compiling timer.c...
 compiling delay.c...
 compiling sys.c...
 compiling usart.c...
+..\SYSTEM\usart\usart.c(410): warning:  #177-D: function "test" was declared but never referenced
 compiling core_cm3.c...
 assembling startup_stm32f10x_hd.s...
 compiling stm32f10x_gpio.c...
@@ -29,414 +30,966 @@ compiling stm32f10x_rcc.c...
 compiling stm32f10x_usart.c...
 compiling misc.c...
 compiling stm32f10x_tim.c...
-"..\OBJ\LED.axf" - 2 Errors, 0 Warning(s).
-Target not created
-Build target 'Target 1'
-compiling main_LongShortKey.c...
-..\DevInterface\eventQueue.h(20): error:  #20: identifier "bool" is undefined
-error type>(32): warning:  #1-D: last line of file ends without a newline
-compiling stm32f10x_it.c...
-compiling system_stm32f10x.c...
-compiling eventQueue.c...
-..\DevInterface\EventQueue.h(20): error:  #20: identifier "bool" is undefined
-error type>(32): warning:  #1-D: last line of file ends without a newline
-..\DevInterface\eventQueue.c(10): error:  #20: identifier "NULL" is undefined
-..\DevInterface\eventQueue.c(24): warning:  #223-D: function "Common_AtomicSection_Begin" declared implicitly
-..\DevInterface\eventQueue.c(28): warning:  #223-D: function "Common_AtomicSection_End" declared implicitly
-..\DevInterface\eventQueue.c(39): warning:  #223-D: function "Common_AtomicSection_End" declared implicitly
-..\DevInterface\eventQueue.c(67): warning:  #223-D: function "Common_AtomicSection_Begin" declared implicitly
-..\DevInterface\eventQueue.c(70): warning:  #223-D: function "Common_AtomicSection_End" declared implicitly
-..\DevInterface\eventQueue.c(75): warning:  #223-D: function "Common_AtomicSection_Begin" declared implicitly
-..\DevInterface\eventQueue.c(78): warning:  #223-D: function "Common_AtomicSection_End" declared implicitly
-..\DevInterface\eventQueue.c(83): warning:  #223-D: function "Common_AtomicSection_Begin" declared implicitly
-..\DevInterface\eventQueue.c(86): warning:  #223-D: function "Common_AtomicSection_End" declared implicitly
-compiling App_LongShortKey.c...
-compiling led.c...
-compiling key.c...
-compiling lcd.c...
-compiling timer.c...
-compiling delay.c...
-compiling sys.c...
-compiling usart.c...
-compiling core_cm3.c...
-compiling stm32f10x_gpio.c...
-compiling stm32f10x_rcc.c...
-compiling stm32f10x_usart.c...
-compiling misc.c...
-compiling stm32f10x_tim.c...
-"..\OBJ\LED.axf" - 3 Errors, 11 Warning(s).
-Target not created
-Build target 'Target 1'
-compiling main_LongShortKey.c...
-..\DevInterface\eventQueue.h(20): error:  #20: identifier "bool" is undefined
-error type>(32): warning:  #1-D: last line of file ends without a newline
-compiling eventQueue.c...
-..\DevInterface\EventQueue.h(20): error:  #20: identifier "bool" is undefined
-error type>(32): warning:  #1-D: last line of file ends without a newline
-..\DevInterface\eventQueue.c(10): error:  #20: identifier "NULL" is undefined
-"..\OBJ\LED.axf" - 3 Errors, 2 Warning(s).
-Target not created
-Build target 'Target 1'
-compiling main_LongShortKey.c...
-..\DevInterface\eventQueue.h(35): warning:  #1-D: last line of file ends without a newline
-compiling eventQueue.c...
-..\DevInterface\EventQueue.h(35): warning:  #1-D: last line of file ends without a newline
-..\DevInterface\eventQueue.c(10): error:  #20: identifier "NULL" is undefined
-"..\OBJ\LED.axf" - 1 Errors, 2 Warning(s).
-Target not created
-Build target 'Target 1'
-compiling main_LongShortKey.c...
-compiling eventQueue.c...
 linking...
-Program Size: Code=4268 RO-data=336 RW-data=76 ZI-data=1636  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-compiling usart.c...
-..\SYSTEM\usart\usart.c(395): warning:  #177-D: variable "len" was declared but never referenced
-linking...
-Program Size: Code=3764 RO-data=336 RW-data=76 ZI-data=1636  
+Program Size: Code=3652 RO-data=336 RW-data=108 ZI-data=1684  
 FromELF: creating hex file...
 "..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
 Build target 'Target 1'
 linking...
-Program Size: Code=3764 RO-data=336 RW-data=76 ZI-data=1636  
+Program Size: Code=3652 RO-data=336 RW-data=108 ZI-data=1684  
 FromELF: creating hex file...
 "..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-main_interface.c(40): warning:  #177-D: variable "state1" was declared but never referenced
-main_interface.c(40): warning:  #177-D: variable "state2" was declared but never referenced
-main_interface.c(41): warning:  #177-D: variable "key" was declared but never referenced
-linking...
-Program Size: Code=3176 RO-data=336 RW-data=60 ZI-data=1636  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 3 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-linking...
-Program Size: Code=3176 RO-data=336 RW-data=60 ZI-data=1636  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling uart_intf.c...
-..\DevInterface\uart_intf.h(17): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=3176 RO-data=336 RW-data=60 ZI-data=1636  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
-Build target 'Target 1'
-compiling uart_intf.c...
-linking...
-Program Size: Code=3176 RO-data=336 RW-data=60 ZI-data=1636  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-linking...
-Program Size: Code=3176 RO-data=336 RW-data=60 ZI-data=1636  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling uart_intf.c...
-compiling usart.c...
-..\SYSTEM\usart\usart.c(395): warning:  #177-D: variable "len" was declared but never referenced
-linking...
-Program Size: Code=3176 RO-data=336 RW-data=60 ZI-data=1636  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
 Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
 Build target 'Target 1'
-compiling usart.c...
+compiling main_interface.c...
 linking...
-Program Size: Code=3176 RO-data=336 RW-data=60 ZI-data=1636  
+Program Size: Code=4104 RO-data=336 RW-data=124 ZI-data=1684  
 FromELF: creating hex file...
 "..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
 Build target 'Target 1'
-compiling uart_intf.c...
-compiling usart.c...
+compiling main_interface.c...
 linking...
-..\OBJ\LED.axf: Error: L6200E: Symbol USART1_IRQHandler_test multiply defined (by usart.o and uart_intf.o).
-"..\OBJ\LED.axf" - 1 Errors, 0 Warning(s).
+Program Size: Code=4416 RO-data=336 RW-data=124 ZI-data=1684  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main_interface.c...
+linking...
+Program Size: Code=4472 RO-data=336 RW-data=124 ZI-data=1684  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+linking...
+Program Size: Code=4476 RO-data=336 RW-data=124 ZI-data=1684  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main_interface.c...
+linking...
+Program Size: Code=4216 RO-data=336 RW-data=124 ZI-data=1684  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main_interface.c...
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(121): error:  #167: argument of type "event_t" is incompatible with parameter of type "event_t *"
+..\APP\App_LongShortKey.c(125): error:  #65: expected a ";"
+..\APP\App_LongShortKey.c(135): error:  #167: argument of type "event_t" is incompatible with parameter of type "event_t *"
+..\APP\App_LongShortKey.c(139): error:  #65: expected a ";"
+..\APP\App_LongShortKey.c(159): error:  #167: argument of type "event_t" is incompatible with parameter of type "event_t *"
+..\APP\App_LongShortKey.c(163): error:  #65: expected a ";"
+..\APP\App_LongShortKey.c(174): warning:  #223-D: function "printf" declared implicitly
+..\APP\App_LongShortKey.c(174): error:  #44: expression must have pointer type
+"..\OBJ\LED.axf" - 7 Errors, 1 Warning(s).
 Target not created
 Build target 'Target 1'
-compiling usart.c...
-linking...
-Program Size: Code=2656 RO-data=336 RW-data=48 ZI-data=1632  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(121): error:  #167: argument of type "event_t" is incompatible with parameter of type "event_t *"
+..\APP\App_LongShortKey.c(135): error:  #167: argument of type "event_t" is incompatible with parameter of type "event_t *"
+..\APP\App_LongShortKey.c(139): error:  #65: expected a ";"
+..\APP\App_LongShortKey.c(159): error:  #167: argument of type "event_t" is incompatible with parameter of type "event_t *"
+..\APP\App_LongShortKey.c(163): error:  #65: expected a ";"
+..\APP\App_LongShortKey.c(174): warning:  #223-D: function "printf" declared implicitly
+..\APP\App_LongShortKey.c(174): error:  #44: expression must have pointer type
+"..\OBJ\LED.axf" - 6 Errors, 1 Warning(s).
+Target not created
 Build target 'Target 1'
-compiling uart_intf.c...
-linking...
-Program Size: Code=2656 RO-data=336 RW-data=48 ZI-data=1632  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(121): error:  #167: argument of type "event_t" is incompatible with parameter of type "event_t *"
+..\APP\App_LongShortKey.c(135): error:  #167: argument of type "event_t" is incompatible with parameter of type "event_t *"
+..\APP\App_LongShortKey.c(139): error:  #65: expected a ";"
+..\APP\App_LongShortKey.c(159): error:  #167: argument of type "event_t" is incompatible with parameter of type "event_t *"
+..\APP\App_LongShortKey.c(174): warning:  #223-D: function "printf" declared implicitly
+..\APP\App_LongShortKey.c(174): error:  #44: expression must have pointer type
+"..\OBJ\LED.axf" - 5 Errors, 1 Warning(s).
+Target not created
 Build target 'Target 1'
-compiling uart_intf.c...
-linking...
-Program Size: Code=3176 RO-data=336 RW-data=60 ZI-data=1636  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-compiling uart_intf.c...
-..\DevInterface\uart_intf.c(23): warning:  #177-D: variable "Res" was declared but never referenced
-linking...
-Program Size: Code=3408 RO-data=336 RW-data=84 ZI-data=1644  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
-Build target 'Target 1'
-compiling uart_intf.c...
-linking...
-Program Size: Code=3408 RO-data=336 RW-data=84 ZI-data=1644  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling uart_intf.c...
-linking...
-Program Size: Code=3376 RO-data=336 RW-data=84 ZI-data=1644  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=3376 RO-data=336 RW-data=84 ZI-data=1644  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling uart_intf.c...
-compiling usart.c...
-linking...
-Program Size: Code=3264 RO-data=336 RW-data=64 ZI-data=1648  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-compiling eventQueue.c...
-compiling uart_intf.c...
-linking...
-Program Size: Code=3264 RO-data=336 RW-data=64 ZI-data=1648  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling uart_intf.c...
-linking...
-Program Size: Code=3264 RO-data=336 RW-data=64 ZI-data=1648  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-main_interface.c(84): warning:  #1-D: last line of file ends without a newline
-compiling usart.c...
-linking...
-..\OBJ\LED.axf: Error: L6200E: Symbol flag multiply defined (by usart.o and main_interface.o).
-..\OBJ\LED.axf: Error: L6200E: Symbol test multiply defined (by usart.o and uart_intf.o).
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(139): error:  #65: expected a ";"
+..\APP\App_LongShortKey.c(174): warning:  #223-D: function "printf" declared implicitly
+..\APP\App_LongShortKey.c(174): error:  #44: expression must have pointer type
 "..\OBJ\LED.axf" - 2 Errors, 1 Warning(s).
 Target not created
 Build target 'Target 1'
-compiling usart.c...
-..\SYSTEM\usart\usart.c(393): warning:  #177-D: function "test" was declared but never referenced
-linking...
-..\OBJ\LED.axf: Error: L6200E: Symbol flag multiply defined (by usart.o and main_interface.o).
-"..\OBJ\LED.axf" - 1 Errors, 1 Warning(s).
-Target not created
-Rebuild target 'Target 1'
-compiling main_interface.c...
-main_interface.c(84): warning:  #1-D: last line of file ends without a newline
-compiling stm32f10x_it.c...
-compiling system_stm32f10x.c...
-compiling eventQueue.c...
-compiling uart_intf.c...
 compiling App_LongShortKey.c...
-compiling led.c...
-compiling key.c...
-compiling lcd.c...
-compiling timer.c...
-compiling delay.c...
-compiling sys.c...
-compiling usart.c...
-..\SYSTEM\usart\usart.c(393): warning:  #177-D: function "test" was declared but never referenced
-compiling core_cm3.c...
-assembling startup_stm32f10x_hd.s...
-compiling stm32f10x_gpio.c...
-compiling stm32f10x_rcc.c...
-compiling stm32f10x_usart.c...
-compiling misc.c...
-compiling stm32f10x_tim.c...
-linking...
-..\OBJ\LED.axf: Error: L6200E: Symbol flag multiply defined (by usart.o and main_interface.o).
-"..\OBJ\LED.axf" - 1 Errors, 2 Warning(s).
-Target not created
-Build target 'Target 1'
-compiling usart.c...
-..\SYSTEM\usart\usart.c(392): warning:  #177-D: function "test" was declared but never referenced
-linking...
-Program Size: Code=3304 RO-data=336 RW-data=68 ZI-data=1644  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=3304 RO-data=336 RW-data=68 ZI-data=1644  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-main_interface.c(83): error:  #167: argument of type "u16 *" is incompatible with parameter of type "char *"
-main_interface.c(85): warning:  #1-D: last line of file ends without a newline
-compiling lcd.c...
-compiling usart.c...
-..\SYSTEM\usart\usart.c(66): error:  #20: identifier "ch" is undefined
-..\SYSTEM\usart\usart.c(405): warning:  #177-D: function "test" was declared but never referenced
-"..\OBJ\LED.axf" - 2 Errors, 2 Warning(s).
-Target not created
-Build target 'Target 1'
-compiling main_interface.c...
-main_interface.c(83): warning:  #167-D: argument of type "u8 *" is incompatible with parameter of type "char *"
-main_interface.c(85): warning:  #1-D: last line of file ends without a newline
-compiling usart.c...
-..\SYSTEM\usart\usart.c(66): error:  #20: identifier "ch" is undefined
-..\SYSTEM\usart\usart.c(405): warning:  #177-D: function "test" was declared but never referenced
-"..\OBJ\LED.axf" - 1 Errors, 3 Warning(s).
-Target not created
-Build target 'Target 1'
-compiling usart.c...
-..\SYSTEM\usart\usart.c(405): warning:  #177-D: function "test" was declared but never referenced
-linking...
-Program Size: Code=2924 RO-data=336 RW-data=56 ZI-data=1648  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-main_interface.c(85): warning:  #1-D: last line of file ends without a newline
-linking...
-Program Size: Code=3304 RO-data=336 RW-data=68 ZI-data=1644  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-main_interface.c(85): warning:  #1-D: last line of file ends without a newline
-compiling uart_intf.c...
-linking...
-Program Size: Code=3376 RO-data=336 RW-data=88 ZI-data=1648  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
-Build target 'Target 1'
-compiling uart_intf.c...
-..\DevInterface\uart_intf.c(18): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
-linking...
-Program Size: Code=3028 RO-data=336 RW-data=76 ZI-data=1644  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
-compiling uart_intf.c...
-..\DevInterface\uart_intf.c(18): warning:  #167-D: argument of type "uint8_t *" is incompatible with parameter of type "char *"
-"..\DevInterface\uart_intf.c" - 0 Errors, 1 Warning(s).
-Build target 'Target 1'
-linking...
-Program Size: Code=3028 RO-data=336 RW-data=76 ZI-data=1644  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-main_interface.c(85): warning:  #1-D: last line of file ends without a newline
-compiling uart_intf.c...
-compiling lcd.c...
-compiling usart.c...
-..\SYSTEM\usart\usart.c(410): warning:  #177-D: function "test" was declared but never referenced
-linking...
-Program Size: Code=3020 RO-data=336 RW-data=76 ZI-data=1644  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 2 Warning(s).
-Build target 'Target 1'
-compiling uart_intf.c...
-linking...
-Program Size: Code=3028 RO-data=336 RW-data=76 ZI-data=1644  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-compiling uart_intf.c...
-linking...
-Program Size: Code=3028 RO-data=336 RW-data=72 ZI-data=1648  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-compiling Timer_intf.c...
-..\DevInterface\Timer_intf.c(117): warning:  #223-D: function "UNUSED_PARAMETER" declared implicitly
-linking...
-..\OBJ\LED.axf: Error: L6218E: Undefined symbol UNUSED_PARAMETER (referred from timer_intf.o).
+..\APP\App_LongShortKey.c(174): warning:  #223-D: function "printf" declared implicitly
+..\APP\App_LongShortKey.c(174): error:  #44: expression must have pointer type
 "..\OBJ\LED.axf" - 1 Errors, 1 Warning(s).
 Target not created
 Build target 'Target 1'
-compiling main_interface.c...
-compiling Timer_intf.c...
-linking...
-Program Size: Code=3028 RO-data=336 RW-data=72 ZI-data=1648  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling main_interface.c...
-linking...
-Program Size: Code=3512 RO-data=336 RW-data=112 ZI-data=1664  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling Timer_intf.c...
-linking...
-Program Size: Code=3840 RO-data=336 RW-data=112 ZI-data=1664  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling Timer_intf.c...
-linking...
-Program Size: Code=3840 RO-data=336 RW-data=112 ZI-data=1664  
-FromELF: creating hex file...
-"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
-Build target 'Target 1'
-compiling Timer_intf.c...
-..\DevInterface\Timer_intf.c(134): error:  #167: argument of type "uint16_t" is incompatible with parameter of type "const char *restrict"
-..\DevInterface\Timer_intf.c(134): error:  #18: expected a ")"
-..\DevInterface\Timer_intf.c(134): error:  #7: unrecognized token
-"..\OBJ\LED.axf" - 3 Errors, 0 Warning(s).
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(174): warning:  #223-D: function "printf" declared implicitly
+..\APP\App_LongShortKey.c(174): error:  #44: expression must have pointer type
+"..\OBJ\LED.axf" - 1 Errors, 1 Warning(s).
 Target not created
 Build target 'Target 1'
-compiling Timer_intf.c...
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(174): warning:  #223-D: function "printf" declared implicitly
+..\APP\App_LongShortKey.c(174): error:  #44: expression must have pointer type
+"..\OBJ\LED.axf" - 1 Errors, 1 Warning(s).
+Target not created
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(174): warning:  #223-D: function "printf" declared implicitly
+..\APP\App_LongShortKey.c(174): error:  #44: expression must have pointer type
+"..\OBJ\LED.axf" - 1 Errors, 1 Warning(s).
+Target not created
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(174): error:  #44: expression must have pointer type
+"..\OBJ\LED.axf" - 1 Errors, 0 Warning(s).
+Target not created
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(174): error:  #171: invalid type conversion
+"..\OBJ\LED.axf" - 1 Errors, 0 Warning(s).
+Target not created
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(174): error:  #144: a value of type "void" cannot be used to initialize an entity of type "uint8_t"
+"..\OBJ\LED.axf" - 1 Errors, 0 Warning(s).
+Target not created
+Build target 'Target 1'
+compiling App_LongShortKey.c...
 linking...
-Program Size: Code=3868 RO-data=336 RW-data=116 ZI-data=1668  
+Program Size: Code=3720 RO-data=336 RW-data=140 ZI-data=1684  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(177): warning:  #223-D: function "printf" declared implicitly
+linking...
+Program Size: Code=4056 RO-data=336 RW-data=140 ZI-data=1684  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main_interface.c...
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(181): warning:  #223-D: function "printf" declared implicitly
+linking...
+Program Size: Code=4340 RO-data=336 RW-data=140 ZI-data=1684  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+linking...
+Program Size: Code=4340 RO-data=336 RW-data=140 ZI-data=1684  
 FromELF: creating hex file...
 "..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
 Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
 Build target 'Target 1'
-compiling Timer_intf.c...
+compiling App_LongShortKey.c...
 linking...
-Program Size: Code=3868 RO-data=336 RW-data=116 ZI-data=1668  
+Program Size: Code=4016 RO-data=336 RW-data=140 ZI-data=1684  
 FromELF: creating hex file...
 "..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
 Build target 'Target 1'
 compiling main_interface.c...
+compiling eventQueue.c...
 compiling uart_intf.c...
 compiling Timer_intf.c...
+compiling App_LongShortKey.c...
 linking...
-Program Size: Code=3676 RO-data=336 RW-data=112 ZI-data=1688  
+Program Size: Code=3996 RO-data=336 RW-data=140 ZI-data=1684  
 FromELF: creating hex file...
 "..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
 Build target 'Target 1'
-compiling main_interface.c...
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(94): warning:  #177-D: variable "p_keyCode" was declared but never referenced
 linking...
-Program Size: Code=3672 RO-data=336 RW-data=112 ZI-data=1688  
+Program Size: Code=3964 RO-data=336 RW-data=140 ZI-data=1684  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+linking...
+Program Size: Code=4016 RO-data=336 RW-data=144 ZI-data=1688  
 FromELF: creating hex file...
 "..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
 Build target 'Target 1'
-compiling main_interface.c...
-main_interface.c(51): warning:  #177-D: variable "cnt" was declared but never referenced
-compiling uart_intf.c...
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(124): error:  #75: operand of "*" must be a pointer
+..\APP\App_LongShortKey.c(125): error:  #167: argument of type "uint8_t" is incompatible with parameter of type "void *"
+..\APP\App_LongShortKey.c(139): error:  #75: operand of "*" must be a pointer
+..\APP\App_LongShortKey.c(140): error:  #167: argument of type "uint8_t" is incompatible with parameter of type "void *"
+..\APP\App_LongShortKey.c(164): error:  #75: operand of "*" must be a pointer
+..\APP\App_LongShortKey.c(165): error:  #167: argument of type "uint8_t" is incompatible with parameter of type "void *"
+"..\OBJ\LED.axf" - 6 Errors, 0 Warning(s).
+Target not created
+Build target 'Target 1'
+compiling App_LongShortKey.c...
 linking...
-Program Size: Code=3608 RO-data=336 RW-data=112 ZI-data=1688  
+Program Size: Code=3992 RO-data=336 RW-data=144 ZI-data=1688  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+linking...
+Program Size: Code=4008 RO-data=336 RW-data=144 ZI-data=1688  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+linking...
+Program Size: Code=4348 RO-data=336 RW-data=144 ZI-data=1688  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(99): warning:  #177-D: variable "keyValue" was declared but never referenced
+linking...
+Program Size: Code=4340 RO-data=336 RW-data=148 ZI-data=1684  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+linking...
+Program Size: Code=4344 RO-data=336 RW-data=148 ZI-data=1684  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(99): warning:  #177-D: variable "keyValue" was declared but never referenced
+linking...
+Program Size: Code=4344 RO-data=336 RW-data=148 ZI-data=1684  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+..\APP\App_LongShortKey.c(97): warning:  #177-D: variable "keyValue" was declared but never referenced
+linking...
+Program Size: Code=4340 RO-data=336 RW-data=144 ZI-data=1688  
 FromELF: creating hex file...
 "..\OBJ\LED.axf" - 0 Errors, 1 Warning(s).
 Build target 'Target 1'
-compiling main_interface.c...
+compiling App_LongShortKey.c...
 linking...
-Program Size: Code=3608 RO-data=336 RW-data=108 ZI-data=1684  
+Program Size: Code=4340 RO-data=336 RW-data=144 ZI-data=1688  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling App_LongShortKey.c...
+linking...
+Program Size: Code=4104 RO-data=336 RW-data=144 ZI-data=1688  
+FromELF: creating hex file...
+"..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).
+Load "..\\OBJ\\LED.axf" 
+Set JLink Project File to "C:\work dir\fsm_software\demo_10th_noOs\USER\JLinkSettings.ini"
+* JLink Info: Device "STM32F103RC" selected (256 KB flash, 48 KB RAM).
+ 
+JLink info:
+------------
+DLL: V4.68a, compiled Apr 12 2013 13:26:50
+Firmware: J-Link ARM V8 compiled Nov 14 2012 22:34:52
+Hardware: V8.00
+S/N : 304423265 
+Feature(s) : RDI,FlashDL,FlashBP,JFlash,GDBFULL 
+ 
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: Found SWD-DP with ID 0x1BA01477
+* JLink Info: TPIU fitted.
+* JLink Info: FPUnit: 6 code (BP) slots and 2 literal slots
+* JLink Info: Found Cortex-M3 r1p1, Little endian.
+ROMTableAddr = 0xE00FF003
+ 
+Target info:
+------------
+Device: STM32F103RC
+VTarget = 3.319V
+State of Pins: 
+TCK: 0, TDI: 1, TDO: 1, TMS: 1, TRES: 1, TRST: 1
+Hardware-Breakpoints: 6
+Software-Breakpoints: 8192
+Watchpoints:          4
+JTAG speed: 4000 kHz
+ 
+Full Chip Erase Done.
+Programming Done.
+Verify OK.
+Application running ...
+Build target 'Target 1'
+compiling main_interface.c...
+compiling App_LongShortKey.c...
+linking...
+Program Size: Code=4104 RO-data=336 RW-data=144 ZI-data=1688  
 FromELF: creating hex file...
 "..\OBJ\LED.axf" - 0 Errors, 0 Warning(s).

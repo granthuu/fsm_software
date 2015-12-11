@@ -43,8 +43,47 @@ void board_init(void)
     NVIC_Configuration();     // 设置中断分组信息
     
     printTask_init();
+    key_paraInit();
+    
+    
+    printf("board initialize \n");
 }
 
+
+void keyScan_Task()
+{
+    uint8_t key =0;
+    
+    if(flag)  // 10ms中断内，查询按键状态，用来消除按键抖动。
+    {
+        flag =0;
+        keyScan();
+    }
+    
+    key = key_readBuff();   /* 注意这里是要调用读取buffer的函数。利用读取函数将按键操作和上层隔离开来。 */
+    if(key != 0x00){
+        
+        switch(key){
+            
+            case (KEY0_CODE + KEY_SHORT_CODE):                              
+                printf("key1 short press \r\n");
+            break;
+            
+            case (KEY0_CODE + KEY_FIRST_LONG_CODE):
+                printf("key1 long press \r\n");
+            break;   
+            
+            case (KEY0_CODE + KEY_AFTER_LONG_CODE):
+                printf("key1 after long press \r\n");
+            break;
+            
+            default:
+                break;
+            
+        }
+    }
+
+}
 
 int main(void)
 {	
@@ -57,18 +96,15 @@ int main(void)
         event = EventQueue_GetPendingEvent();
         if (event)
         {
+            //printf("event->data: %d", event->data);
             event->execute(event->data);
         }
         
-//        if(flag)
-//        {
-//            flag = 0;
-//            if(cnt ++ >= 100)
-//            {
-//                cnt = 0;
-//                printf("1s interrupt \n");
-//            }
-//        }
+        if(flag)  // 10ms中断内，查询按键状态，用来消除按键抖动。
+        {
+            flag =0;
+            keyScan();
+        }
 	}
  }
 

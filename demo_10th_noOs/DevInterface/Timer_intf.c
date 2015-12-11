@@ -82,7 +82,8 @@ uint32_t Timer_GetRemainingMs(softtimer_t* timer)
 void Callback_Timer_TickISR(void)
 {
     timerTicks++;
-    EventQueue_Enqueue(&hwTimerExpired);
+    //EventQueue_Enqueue(&hwTimerExpired);
+    EventQueue_Enqueue_ISR(&hwTimerExpired);
 }
 
 static void OnTimerTickPassed(void)
@@ -128,14 +129,7 @@ static void OnTimerTicksEvent(void* data)
 //    {
 //        printf ("e: %d\n", elapsedTicks);
 //    }
-    
-    
-//    printf("cnt: %d \n", cnt);
-//    if(cnt ++ >= 1000)
-//    {  
-//        cnt = 0;
-//    }
-    
+
     while ( elapsedTicks > 0 )
     {
         OnTimerTickPassed();

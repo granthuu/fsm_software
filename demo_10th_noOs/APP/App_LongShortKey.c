@@ -1,7 +1,20 @@
 #include "App_LongShortKey.h"
+#include <stdio.h>
 
 
-#define KEY0_INPUT  KEY0
+#define KEY_EVENT_QUEUE_DEBUG
+
+#ifdef KEY_EVENT_QUEUE_DEBUG
+// grant add here.
+#include "eventQueue.h"
+
+static void keyScanEvent(void *data);
+static event_t keyPressEvent = EVENT_INIT(keyScanEvent);
+
+#endif
+
+
+#define KEY0_INPUT  KEY1
 
 static char key0_Status = 0;
 static unsigned int key0_TimeS, key0_TimeL;
@@ -76,8 +89,12 @@ char key_readBuff(void)
 /**
  * \brief: 
  */
+
+uint8_t keyCodeBuff[1];
+
 void keyScan(void)
 {
+    
     if(key0_Status == KEY_SHORT_PRESS)
         key0_TimeS ++;
     else
@@ -100,7 +117,14 @@ void keyScan(void)
             if(KEY0_INPUT != 0)  // 表示按键松开了
             {
                 // 保存按键
-                key_inBuff(KEY_SHORT_CODE + KEY0_CODE);
+                //key_inBuff(KEY_SHORT_CODE + KEY0_CODE);
+                
+#ifdef KEY_EVENT_QUEUE_DEBUG
+
+                keyCodeBuff[0] = KEY_SHORT_CODE + KEY0_CODE;
+                EventQueue_EnqueueWithData(&keyPressEvent, keyCodeBuff);
+                //EventQueue_Enqueue_ISR(&keyPressEvent);
+#endif             
                 
                 // 返回到按键未按下模式
                 key0_Status = KEY_NO_PRESS;
@@ -109,7 +133,15 @@ void keyScan(void)
             {
                 if(key0_TimeS >= 2000/10) // 2s detect
                 {
-                    key_inBuff(KEY_FIRST_LONG_CODE + KEY0_CODE); 
+                    //key_inBuff(KEY_FIRST_LONG_CODE + KEY0_CODE); 
+#ifdef KEY_EVENT_QUEUE_DEBUG
+                    
+                   keyCodeBuff[0] = KEY_FIRST_LONG_CODE + KEY0_CODE;
+                   EventQueue_EnqueueWithData(&keyPressEvent, keyCodeBuff);
+                     //EventQueue_Enqueue_ISR(&keyPressEvent);
+#endif        
+
+                    
                     key0_Status = KEY_LONG_PRESS;
                 }    
             }
@@ -126,7 +158,15 @@ void keyScan(void)
             {
                 if(key0_TimeL >= 100/10)  // 250ms
                 {
-                    key_inBuff(KEY_AFTER_LONG_CODE + KEY0_CODE); 
+                    //key_inBuff(KEY_AFTER_LONG_CODE + KEY0_CODE); 
+#ifdef KEY_EVENT_QUEUE_DEBUG
+                                        
+                    keyCodeBuff[0] = KEY_AFTER_LONG_CODE + KEY0_CODE;
+                    EventQueue_EnqueueWithData(&keyPressEvent, keyCodeBuff);
+                    // EventQueue_Enqueue_ISR(&keyPressEvent);
+#endif        
+
+                    
                     key0_TimeL = 0;
                 }    
             }      
@@ -135,7 +175,30 @@ void keyScan(void)
 }
 
 
-
+void keyScanEvent(void *data)
+{
+    uint8_t *keyCode = (uint8_t *)keyPressEvent.data;
+    uint8_t key = *keyCode;
+    
+    switch(key){
+        
+        case (KEY0_CODE + KEY_SHORT_CODE):                              
+            printf("key1 short press \r\n");
+        break;
+        
+        case (KEY0_CODE + KEY_FIRST_LONG_CODE):
+            printf("key1 long press \r\n");
+        break;   
+        
+        case (KEY0_CODE + KEY_AFTER_LONG_CODE):
+            printf("key1 after long press \r\n");
+        break;
+        
+        default:
+            break;
+        
+    }
+}
 
 
 

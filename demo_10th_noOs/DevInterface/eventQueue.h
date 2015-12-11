@@ -5,10 +5,13 @@
 #include "stm32f10x.h"
 
 // ------------------------------------------------------------------
-// grant add here. to avoid compile sucessful.
+// grant add here. to avoid compile warning.
 
-#define Common_AtomicSection_Begin()    __disable_irq()
-#define Common_AtomicSection_End()      __enable_irq()
+//#define Common_AtomicSection_Begin()    __disable_irq()
+//#define Common_AtomicSection_End()      __enable_irq()
+#define Common_AtomicSection_Begin()    
+#define Common_AtomicSection_End()      
+
 
 #ifndef NULL
 #define NULL 0
