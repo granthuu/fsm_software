@@ -16,3 +16,5 @@
 ..\obj\uart_intf.o: ..\SYSTEM\usart\usart.h
 ..\obj\uart_intf.o: ..\SYSTEM\sys\sys.h
 ..\obj\uart_intf.o: ..\DevInterface\Timer_intf.h
+..\obj\uart_intf.o: ..\DevInterface\ring_buffer.h
+..\obj\uart_intf.o: C:\Keil\ARM\ARMCC\bin\..\include\inttypes.h

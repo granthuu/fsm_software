@@ -8,6 +8,16 @@ uint8_t flag = 0;
 extern char receive_ok;
 extern char rx_flag;
 
+typedef struct { 
+		char b0:1; 
+		char b1:1; 
+		char b2:1; 
+		char b3:1;
+		char b4:1; 
+		char b5:1; 
+		char b6:1; 
+		char b7:1;
+	}Bit;
 
 int main(void)
  {	

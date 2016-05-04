@@ -14,4 +14,5 @@
 ..\obj\app_longshortkey.o: ..\STM32F10x_FWLib\inc\stm32f10x_usart.h
 ..\obj\app_longshortkey.o: ..\STM32F10x_FWLib\inc\misc.h
 ..\obj\app_longshortkey.o: C:\Keil\ARM\ARMCC\bin\..\include\stdio.h
+..\obj\app_longshortkey.o: ..\DevInterface\Timer_intf.h
 ..\obj\app_longshortkey.o: ..\DevInterface\eventQueue.h

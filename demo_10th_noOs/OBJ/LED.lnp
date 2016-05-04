@@ -5,6 +5,7 @@
 "..\obj\eventqueue.o"
 "..\obj\uart_intf.o"
 "..\obj\timer_intf.o"
+"..\obj\ring_buffer.o"
 "..\obj\app_longshortkey.o"
 "..\obj\led.o"
 "..\obj\key.o"

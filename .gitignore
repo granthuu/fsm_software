@@ -24,3 +24,5 @@ demo_8th_freeRTOS_InterruptManagement/OBJ/
 FreeRTOSv8.2.2/
 freeRTOS Document/
 demo_10th_noOs/si
+demo_10th_noOs/CORE/
+demo_10th_noOs/OBJ/
