@@ -90,7 +90,7 @@ ARM Macro Assembler    Page 2
    52 00000200                 PRESERVE8
    53 00000200                 THUMB
    54 00000200         
-   55 00000200         ; grant add here to merge freeRTOS
+   55 00000200         ;add here to merge freeRTOS
    56 00000200                 IMPORT           xPortPendSVHandler
    57 00000200                 IMPORT           xPortSysTickHandler
    58 00000200                 IMPORT           vPortSVCHandler

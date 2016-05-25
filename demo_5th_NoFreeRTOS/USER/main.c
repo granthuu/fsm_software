@@ -13,10 +13,10 @@
 	{
 		LED0=0;
 		LED1=1;
-		delay_ms(300);	 //延时300ms
+		delay_ms(1000);	 //延时300ms
 		LED0=1;
 		LED1=0;
-		delay_ms(300);	//延时300ms
+		delay_ms(1000);	//延时300ms
 	}
  }
 
